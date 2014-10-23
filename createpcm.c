@@ -133,9 +133,10 @@ static void print_config(int channels, int rate, int bps, int decibel)
     printf(" channels: %d ch\n", channels); 
     printf(" rate: %d HZ\n", rate);
     printf(" bps: %d bit/sample\n", bps);
-    printf(" decibel: %d db", decibel);
+    printf(" decibel: %d db\n", decibel);
     printf("================end====================\n");
 }
+
 //static void generate_sine(/*const snd_pcm_channel_area_t *areas,*/ 
 //			  snd_pcm_uframes_t offset,
 //			  int count, double *_phase, int channels, int freq, int format_bits, int rate)
@@ -152,59 +153,59 @@ int main(int argc, char **argv)
 
     double _phase = 8.4199314187571872e-13; 
 
-	struct option long_option[] =
-	{
-		{"help", 0, NULL, 'h'},
-		{"rate", 1, NULL, 'r'},
-		{"channels", 1, NULL, 'c'},
-		{"frequency", 1, NULL, 'f'},
-		{"period", 1, NULL, 'p'},
-		{"format", 1, NULL, 'o'},
-		{NULL, 0, NULL, 0},
-	};
+    struct option long_option[] =
+    {
+        {"help", 0, NULL, 'h'},
+        {"rate", 1, NULL, 'r'},
+        {"channels", 1, NULL, 'c'},
+        {"frequency", 1, NULL, 'f'},
+        {"period", 1, NULL, 'p'},
+        {"format", 1, NULL, 'o'},
+        {NULL, 0, NULL, 0},
+    };
 
-	int morehelp = 0;
-	while (1) {
-		int c;
-		if ((c = getopt_long(argc, argv, "h:r:c:f:p:o", long_option, NULL)) < 0)
-			break;
-		switch (c) {
-		case 'h':
-			morehelp++;
-			break;
-		case 'r':
-			rate = atoi(optarg);
-			rate = rate < 4000 ? 4000 : rate;
-			rate = rate > 196000 ? 196000 : rate;
-			break;
-		case 'c':
-			channels = atoi(optarg);
-			channels = channels < 1 ? 1 : channels;
-			channels = channels > 1024 ? 1024 : channels;
-			break;
-		case 'f':
-			freq = atoi(optarg);
-			freq = freq < 50 ? 50 : freq;
-			freq = freq > 5000 ? 5000 : freq;
-			break;
-		case 'p':
-			period_time = atoi(optarg);
-			period_time = period_time < 1000 ? 1000 : period_time;
-			period_time = period_time > 1000000 ? 1000000 : period_time;
-			break;
-		case 'o':
-            printf("served set config item\n");
-			break;
-        defaddult:
-            printf("using default configuration:\n");
+    int morehelp = 0;
+    while (1) {
+        int c;
+        if ((c = getopt_long(argc, argv, "h:r:c:f:p:o", long_option, NULL)) < 0)
             break;
-		}
-	}
-
-	if (morehelp) {
-		help();
-		return 0;
-	}
+        switch (c) {
+            case 'h':
+                morehelp++;
+                break;
+            case 'r':
+                rate = atoi(optarg);
+                rate = rate < 4000 ? 4000 : rate;
+                rate = rate > 196000 ? 196000 : rate;
+                break;
+            case 'c':
+                channels = atoi(optarg);
+                channels = channels < 1 ? 1 : channels;
+                channels = channels > 1024 ? 1024 : channels;
+                break;
+            case 'f':
+                freq = atoi(optarg);
+                freq = freq < 50 ? 50 : freq;
+                freq = freq > 5000 ? 5000 : freq;
+                break;
+            case 'p':
+                period_time = atoi(optarg);
+                period_time = period_time < 1000 ? 1000 : period_time;
+                period_time = period_time > 1000000 ? 1000000 : period_time;
+                break;
+            case 'o':
+                printf("served set config item\n");
+                break;
+            defaddult:
+                printf("using default configuration:\n");
+                break;
+        }
+    }
+    
+    if (morehelp) {
+        help();
+        return 0;
+    }
     
     print_config(channels, channels, rate, decibel);
 

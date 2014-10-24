@@ -30,6 +30,10 @@ void write_wav_header(void *header, int channels, int rate, int bps, int period)
 }
 
 
+#ifdef TEST
+
+//the main work is to write wav header
+//thd wav data is from generational sine wav function
 int main(int argc, char **argv)
 {
     
@@ -76,3 +80,4 @@ int main(int argc, char **argv)
     fclose(fpw);
     return 0;
 }
+#endif

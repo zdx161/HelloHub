@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <getopt.h>
+#include "wav.h"
 
-static void generate_sine(/*const snd_pcm_channel_area_t *areas,*/ 
-                          /*snd_pcm_uframes_t*/int offset,
-                          int count, double *_phase, int channels, int freq, int format_bits, int rate)
+static void generate_sine(int offset, int count, double *_phase, int channels,
+                          int freq, int format_bits, int rate)
 {
     static double max_phase = 2. * M_PI;
     double phase = *_phase;
@@ -141,11 +141,6 @@ static void print_config(int channels, int rate, int bps, int decibel)
     printf("================end====================\n");
 }
 
-//static void generate_sine(/*const snd_pcm_channel_area_t *areas,*/ 
-//			  snd_pcm_uframes_t offset,
-//			  int count, double *_phase, int channels, int freq, int format_bits, int rate)
-//#define CREATE_NAME() 
-
 int main(int argc, char **argv)
 {
     int channels = 2;
@@ -214,6 +209,7 @@ int main(int argc, char **argv)
     print_config(channels, channels, rate, decibel);
 
     generate_sine(0, 441000, &_phase, 2, 440, 16, 44100);
+    //write_wav_header(); //need implment 
   
     return 0;
 }

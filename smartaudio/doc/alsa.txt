@@ -1,0 +1,26 @@
+=====ALSA Programming HOWTO====================
+
+1. Compiling an AlSA application:
+    Just use -lasound and make sure you have included
+    #include <alsa/asoundlib.h>
+
+2. Basic PCM audio
+    (1). a handle for the PCM device.
+    (2). specify the direction of the PCM stream:playback or capture
+    (3). configuration information: buffer size, sample rate, pcm data format.
+    (4). ALSA interfaces to the PCM devices:"plughw" and "hw".
+         "plughw": need not care much about the sound hardware, if not support, your data will be automatically coverted.
+         "hw": have to check if hardware supports the configuration.
+    (5). open the PCM device
+    (6). before write PCM data to the soundcard, have to specify access type, sample format, sample rate, number of channles, number of periods and period size.
+    (7). Information about possible configuration can be obtained with a set of functions named
+         snd_pcm_hw_params_can_<capability>
+         snd_pcm_hw_params_is_<property>
+         snd_pcm_hw_params_get_<parameter>
+         snd_pcm_hw_params_test_<parameter>
+         snd_pcm_hw_params_set_<parameter>
+
+    (8). The access type specifies the way in which multichannel data is stored in the buffer.
+         INTERLEAVED======NOINTERLEAVED
+
+    (9). after configuration, start writing PCM data

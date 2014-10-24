@@ -209,8 +209,7 @@ int main(int argc, char **argv)
     
     print_config(channels, channels, rate, decibel);
 
-    //double _phase = 8.4199314187571872e-13; 
-    //generate_sine(0, 441000, &_phase, 1, 440, 16, 44100);
+    generate_sine(0, 441000, &_phase, 1, 440, 16, 44100);
   
     return 0;
 }

@@ -1,6 +1,7 @@
 
 #ifndef RIFF_WAV_H
 #define RIFF_WAV_H
+#include "common.h"
 
 typedef unsigned int DWORD;
 typedef unsigned short WORD;
@@ -28,6 +29,7 @@ typedef struct {
 } SubchunkData;
 
 
-void write_wav_header(void *header, int channels, int rate, int bps, int period);
+void write_wav_header(void *header, AudioInfo info, int period);
+void write_wav(AudioInfo info, uchar *pcm, int size);
 
 #endif

@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include "wav.h"
 
-void write_wav_header(void *header, int channels, int rate, int bps, int period)
+void write_wav_header(void *header, AudioInfo info, int period)
 {
     ChuckDes *descriptor;
     descriptor = (ChuckDes *) header;
     descriptor->ChunkID = 'R' | 'I'  << 8  | 'F' << 16 | 'F' << 24;
     printf("ID:0x%x\n", descriptor->ChunkID);
-    descriptor->ChunkSize = period * channels + 4 + 4 + 36; 
+    descriptor->ChunkSize = period + 4 + 4 + 36; 
     descriptor->Format = 'W' | 'A' << 8 | 'V' << 16 | 'E' << 24;
     printf("WAV:0x%x\n", descriptor->Format);
 
@@ -16,19 +16,46 @@ void write_wav_header(void *header, int channels, int rate, int bps, int period)
     fmt = (SubchunkFMT *)(header+sizeof(ChuckDes));
     fmt->Subchunk1ID = 'f' | 'm' << 8 | 't' << 16 | ' ' << 24; 
     printf("fmt:0x%x\n", fmt->Subchunk1ID);
-    fmt->Subchunk1Size = 16;
-    fmt->AudioForamt = 1;
-    fmt->NumChannles = channels;
-    fmt->SampleRate = rate;
-    fmt->ByteRate = rate * channels * bps / 8;
-    fmt->BlockAlign = channels * bps / 8;
-    fmt->BitsPerSample = bps;
+    fmt->Subchunk1Size = info.bps;
+    fmt->AudioForamt = 1; //pcm: default
+    fmt->NumChannles = info.channels;
+    fmt->SampleRate = info.rate;
+    fmt->ByteRate = info.rate * info.channels * info.bps / 8;
+    fmt->BlockAlign = info.channels * info.bps / 8;
+    fmt->BitsPerSample = info.bps;
 
     SubchunkData * data = (SubchunkData*)(header+sizeof(ChuckDes)+sizeof(SubchunkFMT));
     data->Subchunk2ID = 'd' | 'a' << 8 | 't' << 16 | 'a' << 24;
-    data->Subchunk2Size = period * channels + 4 + 4;
+    data->Subchunk2Size = period + 4 + 4;
 }
 
+void write_wav(AudioInfo info, uchar *pcm, int size)
+{
+    void *head = NULL;
+    int hsize = 0;
+    int ret = 0;
+    FILE *fp = NULL;
+    fp = fopen("pcm.wav", "a+");
+    if(fp == NULL){
+        perror("open wav file failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    hsize = sizeof(ChuckDes) + sizeof(SubchunkFMT) + sizeof(SubchunkData); 
+    
+    ret = alocate_buffer(&head, hsize);
+    if(ret != 0){
+        printf("alocate wav header buffer failed.\n");
+        goto out;
+    }
+    
+    write_wav_header(head, info, size);
+    fwrite((char*)head, sizeof(char), hsize, fp);
+    fwrite((char*)pcm, sizeof(char), size, fp);
+
+out:
+    fclose(fp);
+}
 
 #ifdef TEST
 

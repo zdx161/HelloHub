@@ -1,0 +1,6 @@
+*.o
+*.out
+tags
+wav
+*.so
+*.a

@@ -8,8 +8,9 @@ struct option long_option[] =
     {"rate", 1, NULL, 'r'},
     {"channels", 1, NULL, 'c'},
     {"frequency", 1, NULL, 'f'},
-    {"period", 1, NULL, 'p'},
+    {"duration", 1, NULL, 'd'},
     {"format", 1, NULL, 'o'},
+    {"amplitude", 1, NULL, 'a'},
     {NULL, 0, NULL, 0},
 };
 
@@ -22,8 +23,9 @@ void help(void)
         "-r,--rate	stream rate in Hz\n"
         "-c,--channels	count of channels in stream\n"
         "-f,--frequency	sine wave frequency in Hz\n"
-        "-p,--period	period size in us\n"
+        "-d,--duration	audio duration in seconds\n"
         "-o,--format	sample format\n"
+        "-a,--amplitude amplitude is in db\n"
         "\n");
 #if 0
     printf("Recognized sample formats are:");
@@ -71,10 +73,11 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
     int channels;
     int freq;
     int period_time;
+    int decibel;
 
     while (1) {
         int c;
-        if ((c = getopt_long(argc, argv, "hr:c:f:p:o", long_option, NULL)) < 0){
+        if ((c = getopt_long(argc, argv, "hr:c:f:d:o:a:xyz", long_option, NULL)) < 0){
             if(argc == 1)
                 morehelp = 2;
             break;
@@ -101,13 +104,28 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
                 freq = freq < 50 ? 50 : freq;
                 freq = freq > 5000 ? 5000 : freq;
                 break;
-            case 'p':
+            case 'd':
                 period_time = atoi(optarg);
                 period_time = period_time < 1000 ? 1000 : period_time;
                 period_time = period_time > 1000000 ? 1000000 : period_time;
                 break;
             case 'o':
                 printf("served set config item\n");
+                break;
+            case 'a':
+                decibel = atoi(optarg);
+                decibel = decibel < 0 ? -decibel : decibel;
+                decibel = decibel / 6;
+                optinfo->decibel = decibel;
+                break;
+            case 'x':
+                morehelp = 1;
+                break;
+            case 'y':
+                morehelp = 1;
+                break;
+            case 'z':
+                morehelp = 1;
                 break;
             default:
                 printf("can not support option: %c\n", c);

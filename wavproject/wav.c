@@ -16,7 +16,7 @@ void write_wav_header(void *header, AudioInfo info, int period)
     fmt = (SubchunkFMT *)(header+sizeof(ChuckDes));
     fmt->Subchunk1ID = 'f' | 'm' << 8 | 't' << 16 | ' ' << 24; 
     printf("fmt:0x%x\n", fmt->Subchunk1ID);
-    fmt->Subchunk1Size = info.bps;
+    fmt->Subchunk1Size = 16;
     fmt->AudioForamt = 1; //pcm: default
     fmt->NumChannles = info.channels;
     fmt->SampleRate = info.rate;
@@ -35,7 +35,7 @@ void write_wav(AudioInfo info, uchar *pcm, int size)
     int hsize = 0;
     int ret = 0;
     FILE *fp = NULL;
-    fp = fopen("pcm.wav", "a+");
+    fp = fopen("pcm.wav", "wb");
     if(fp == NULL){
         perror("open wav file failed.\n");
         exit(EXIT_FAILURE);
@@ -52,6 +52,11 @@ void write_wav(AudioInfo info, uchar *pcm, int size)
     write_wav_header(head, info, size);
     fwrite((char*)head, sizeof(char), hsize, fp);
     fwrite((char*)pcm, sizeof(char), size, fp);
+
+    if(ret == 0){
+        free_buffer(&head);
+        head = NULL;
+    }
 
 out:
     fclose(fp);
@@ -73,7 +78,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
    
-    fpw = fopen("dump.wav", "a+");
+    fpw = fopen("dump.wav", "wb");
     if(fpw == NULL){
         perror("open write file failed.\n");
         exit(EXIT_FAILURE);

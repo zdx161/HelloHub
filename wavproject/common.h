@@ -10,6 +10,7 @@ typedef struct AUDIO_INFO{
 } AudioInfo;
 
 typedef unsigned char uchar;
+typedef unsigned int  uint;
 
 int alocate_buffer(uchar **pcm, int size);
 void free_buffer(uchar **pcm);

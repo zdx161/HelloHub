@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "common.h"
 #include "option.h"
 #include "pcm.h"
@@ -14,7 +15,7 @@ int main(int argc, char **argv)
     int period;
     int size;
     int morehelp = 0;
-    uchar *pcm;
+    void *pcm;
     double _phase = 8.4199314187571872e-13;
     AudioInfo info;
    

@@ -13,4 +13,4 @@ common.o:common.c
 
 .PHONY: clean all
 clean:
-	rm wav *.o
+	-rm -f wav *.o

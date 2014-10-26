@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include "common.h"
 
-int alocate_buffer(uchar **pcm, int size)
+int alocate_buffer(void **pcm, int size)
 {
     int ret = 0;
     printf("point addr %p\n", pcm);
-    *pcm = (uchar *)malloc(size * sizeof(uchar));
+    *pcm = (void *)malloc(size * sizeof(uchar));
     if(*pcm == NULL){
         printf("alocate buffer failed.\n");
         ret = -1;
@@ -15,7 +15,7 @@ int alocate_buffer(uchar **pcm, int size)
     return ret;
 }
 
-void free_buffer(uchar **pcm)
+void free_buffer(void **pcm)
 {
     if(*pcm != NULL){
         printf("free memory!\n");

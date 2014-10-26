@@ -12,7 +12,7 @@ typedef struct AUDIO_INFO{
 typedef unsigned char uchar;
 typedef unsigned int  uint;
 
-int alocate_buffer(uchar **pcm, int size);
-void free_buffer(uchar **pcm);
+int alocate_buffer(void **pcm, int size);
+void free_buffer(void **pcm);
 
 #endif

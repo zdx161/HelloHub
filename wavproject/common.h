@@ -6,7 +6,7 @@ typedef struct AUDIO_INFO{
     int rate;
     int bps;
     int decibel;
-    //int period_time;
+    int duration;
 } AudioInfo;
 
 typedef unsigned char uchar;

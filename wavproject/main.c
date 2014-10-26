@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
     int ret = 0;
     int freq = 440;
-    int period_time = 10; //audio duration (seconds)
+    //int period_time = 10; //audio duration (seconds)
     int period;
     int size;
     int morehelp = 0;
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
     print_config(info);
 
-    period = period_time * info.rate;
+    period = info.duration * info.rate;
 
     printf("pcm: %p\n", &pcm);
     size = period * info.channels * info.bps / 8;

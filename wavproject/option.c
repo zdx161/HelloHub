@@ -54,6 +54,7 @@ void print_config(AudioInfo optinfo)
     printf(" rate: %d HZ\n", optinfo.rate);
     printf(" bps: %d bit/sample\n", optinfo.bps);
     printf(" decibel: %d db\n", optinfo.decibel);
+    printf(" duration: %d s\n", optinfo.duration);
     printf("================end====================\n");
 }
 
@@ -63,7 +64,7 @@ void set_default_config(AudioInfo *definfo)
     definfo->rate = 44100;
     definfo->bps = 16;
     definfo->decibel = 0;
-
+    definfo->duration = 10;
 }
 
 int parse_option(int argc, char **argv, AudioInfo *optinfo)
@@ -106,8 +107,9 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
                 break;
             case 'd':
                 period_time = atoi(optarg);
-                period_time = period_time < 1000 ? 1000 : period_time;
-                period_time = period_time > 1000000 ? 1000000 : period_time;
+                period_time = period_time < 10 ? 10 : period_time;
+                period_time = period_time > 60 ? 60 : period_time;
+                optinfo->duration = period_time; 
                 break;
             case 'o':
                 printf("served set config item\n");

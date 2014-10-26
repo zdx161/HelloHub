@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "wav.h"
 
+
 void write_wav_header(void *header, AudioInfo info, int period)
 {
     ChuckDes *descriptor;
@@ -32,14 +33,20 @@ void write_wav_header(void *header, AudioInfo info, int period)
 void write_wav(AudioInfo info, uchar *pcm, int size)
 {
     void *head = NULL;
+    char name[128] = {0};
     int hsize = 0;
     int ret = 0;
     FILE *fp = NULL;
-    fp = fopen("pcm.wav", "wb");
+
+    sprintf(name, "%dch_%dHZ_%ddb_sine.wav", info.channels, info.rate, info.decibel*6);
+    printf("name is %s\n", name);
+
+    fp = fopen(name, "wb");
     if(fp == NULL){
         perror("open wav file failed.\n");
         exit(EXIT_FAILURE);
     }
+
 
     hsize = sizeof(ChuckDes) + sizeof(SubchunkFMT) + sizeof(SubchunkData); 
     

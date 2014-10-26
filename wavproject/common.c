@@ -5,7 +5,7 @@
 int alocate_buffer(void **pcm, int size)
 {
     int ret = 0;
-    printf("point addr %p\n", pcm);
+    //printf("point addr %p\n", pcm);
     *pcm = (void *)malloc(size * sizeof(uchar));
     if(*pcm == NULL){
         printf("alocate buffer failed.\n");
@@ -18,7 +18,7 @@ int alocate_buffer(void **pcm, int size)
 void free_buffer(void **pcm)
 {
     if(*pcm != NULL){
-        printf("free memory!\n");
+        //printf("free memory!\n");
         free(*pcm);
         *pcm = NULL;
     }

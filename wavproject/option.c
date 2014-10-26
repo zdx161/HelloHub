@@ -2,6 +2,7 @@
 #include <getopt.h>
 #include "option.h"
 
+
 struct option long_option[] =
 {
     {"help", 0, NULL, 'h'},
@@ -14,48 +15,37 @@ struct option long_option[] =
     {NULL, 0, NULL, 0},
 };
 
+void show_info(void)
+{
+    printf("  %s version 0.1 release, Copyright (c) %d-%d the SoftWare developers\n", 
+            NAME, 2014, 2014);
+    printf("  built on %s %s with %s %s\n", __DATE__, __TIME__, CC_TYPE, CC_VERSION);
+}
 void help(void)
 {
-    int k;
     printf(
-        "Usage: createwav [OPTION]...\n"
-        "-h,--help	help\n"
-        "-r,--rate	stream rate in Hz\n"
-        "-c,--channels	count of channels in stream\n"
-        "-f,--frequency	sine wave frequency in Hz\n"
-        "-d,--duration	audio duration in seconds\n"
-        "-o,--format	sample format\n"
-        "-a,--amplitude amplitude is in db\n"
+        "\n  Usage: icanwav [OPTION] ...\n"
+        "    -h,--help	help\n"
+        "    -r,--rate	stream rate in Hz\n"
+        "    -c,--channels	count of channels in stream\n"
+        "    -f,--frequency	sine wave frequency in Hz\n"
+        "    -d,--duration	audio duration in seconds\n"
+        "    -o,--format	sample format\n"
+        "    -a,--amplitude amplitude is in db\n"
         "\n");
-#if 0
-    printf("Recognized sample formats are:");
-
-    for (k = 0; k < SND_PCM_FORMAT_LAST; ++k) {
-        const char *s = snd_pcm_format_name(k);
-
-        if (s)
-            printf(" %s", s);
-    }
-
-    printf("\n");
-    printf("Recognized transfer methods are:");
-
-    for (k = 0; transfer_methods[k].name; k++)
-        printf(" %s", transfer_methods[k].name);
-
-    printf("\n");
-#endif
 }
 
 void print_config(AudioInfo optinfo)
 {
-    printf("\n====== show configuration info ======\n");
-    printf(" channels: %d ch\n", optinfo.channels);
-    printf(" rate: %d HZ\n", optinfo.rate);
-    printf(" bps: %d bit/sample\n", optinfo.bps);
-    printf(" decibel: %d db\n", optinfo.decibel);
-    printf(" duration: %d s\n", optinfo.duration);
-    printf("================end====================\n");
+    //printf("***********************************************************\n");
+    printf("  Show you configuration information: \n");
+    printf("  channels:      %d ch\n", optinfo.channels);
+    printf("  samplerate:    %d HZ\n", optinfo.rate);
+    printf("  bitspersample: %d bps\n", optinfo.bps);
+    printf("  amplitude:     %d db\n", optinfo.decibel*6);
+    printf("  duration:      %d s\n", optinfo.duration);
+    //printf("***********************************************************\n");
+    //printf("   \n");
 }
 
 void set_default_config(AudioInfo *definfo)

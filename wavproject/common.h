@@ -1,6 +1,10 @@
 #ifndef COMMON_HEADER_H
 #define COMMON_HEADER_H
 
+#define CC_TYPE "gcc"
+#define CC_VERSION __VERSION__
+#define NAME "icanwav"
+
 typedef struct AUDIO_INFO{
     int channels;
     int rate;

@@ -15,14 +15,14 @@ void generate_sine(int offset, int count, double *_phase, int freq, AudioInfo in
     int steps[channels];
     unsigned int chn;
     //int format_bits = snd_pcm_format_width(format);
-    printf("format_bits:%d\n", format_bits);
+    //printf("format_bits:%d\n", format_bits);
     uint maxval;
     //unsigned int maxval = (1 << (format_bits - info.decibel - 1)) - 1;
     if(format_bits/2 >= info.decibel)
         maxval = (1 << (format_bits - info.decibel - 1)) - 1;
     else
         maxval = (1 << (format_bits - 1)) - 1;
-    printf("maxval:%u\n", maxval);
+    //printf("maxval:%u\n", maxval);
     int bps = format_bits / 8;  /* bytes per sample */
     int phys_bps = 16 / 8;
     int big_endian = 0;

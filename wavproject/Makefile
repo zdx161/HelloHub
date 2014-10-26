@@ -1,5 +1,5 @@
-wav:main.o option.o pcm.o wav.o common.o
-	gcc main.o option.o pcm.o wav.o common.o -o wav -lm
+icanwav:main.o option.o pcm.o wav.o common.o
+	gcc main.o option.o pcm.o wav.o common.o -o icanwav -lm
 main.o: main.c
 	gcc -g -c main.c
 option.o:
@@ -13,4 +13,4 @@ common.o:common.c
 
 .PHONY: clean all
 clean:
-	-rm -f wav *.o
+	-rm -f icanwav *.o

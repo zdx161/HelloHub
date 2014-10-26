@@ -8,15 +8,15 @@ void write_wav_header(void *header, AudioInfo info, int period)
     ChuckDes *descriptor;
     descriptor = (ChuckDes *) header;
     descriptor->ChunkID = 'R' | 'I'  << 8  | 'F' << 16 | 'F' << 24;
-    printf("ID:0x%x\n", descriptor->ChunkID);
+    //printf("ID:0x%x\n", descriptor->ChunkID);
     descriptor->ChunkSize = period + 4 + 4 + 36; 
     descriptor->Format = 'W' | 'A' << 8 | 'V' << 16 | 'E' << 24;
-    printf("WAV:0x%x\n", descriptor->Format);
+    //printf("WAV:0x%x\n", descriptor->Format);
 
     SubchunkFMT *fmt;
     fmt = (SubchunkFMT *)(header+sizeof(ChuckDes));
     fmt->Subchunk1ID = 'f' | 'm' << 8 | 't' << 16 | ' ' << 24; 
-    printf("fmt:0x%x\n", fmt->Subchunk1ID);
+    //printf("fmt:0x%x\n", fmt->Subchunk1ID);
     fmt->Subchunk1Size = 16;
     fmt->AudioForamt = 1; //pcm: default
     fmt->NumChannles = info.channels;
@@ -39,7 +39,7 @@ void write_wav(AudioInfo info, uchar *pcm, int size)
     FILE *fp = NULL;
 
     sprintf(name, "%dch_%dHZ_%ddb_sine.wav", info.channels, info.rate, info.decibel*6);
-    printf("name is %s\n", name);
+    //printf("name is %s\n", name);
 
     fp = fopen(name, "wb");
     if(fp == NULL){
@@ -67,6 +67,11 @@ void write_wav(AudioInfo info, uchar *pcm, int size)
 
 out:
     fclose(fp);
+    //printf("\n***********************************************************\n");
+    printf("\n  Congratulations! success to create wav file you need.  \n");
+    printf("  saved to %s                      \n", name);
+    //printf("***********************************************************\n");
+
 }
 
 #ifdef TEST

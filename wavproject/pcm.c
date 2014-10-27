@@ -24,16 +24,10 @@ void generate_sine(int offset, int count, double *_phase, int freq, AudioInfo in
         maxval = (1 << (format_bits - 1)) - 1;
     //printf("maxval:%u\n", maxval);
     int bps = format_bits / 8;  /* bytes per sample */
-    int phys_bps = 16 / 8;
+    //int phys_bps = 16 / 8;
     int big_endian = 0;
     int to_unsigned = 0;
     int is_float = 0;
-#if 0
-    FILE *fp=NULL;
-    fp = fopen("dumppcm", "a+");
-    if(fp == NULL)
-        printf("open dump file failed.\n");
-#endif
 
     /* verify and prepare the contents of areas */
     for (chn = 0; chn < channels; chn++) {
@@ -70,15 +64,6 @@ void generate_sine(int offset, int count, double *_phase, int freq, AudioInfo in
                 for (i = 0; i < bps; i++){
                     //*(samples[chn] + i) = (res >>  i * 8) & 0xff;
                     *(samples + i) = (res >>  i * 8) & 0xff;
-#if 0                    
-                    unsigned char sample =  (res >>  i * 8) & 0xff;
-                    if(i == 0)
-                        sample = 0;
-                    //*(samples[chn] + i) = 0;
-                    if(fp != NULL){
-                        fwrite((char*)(&sample/*samples[chn] + i*/), 1, 1,fp);
-                    }
-#endif
                 }
             }
             //samples[chn] += steps[chn];
@@ -91,11 +76,4 @@ void generate_sine(int offset, int count, double *_phase, int freq, AudioInfo in
     }
 
     *_phase = phase;
-#if 0
-    if(fp != NULL)
-    {
-        fclose(fp);
-        fp = NULL;
-    }
-#endif
 }

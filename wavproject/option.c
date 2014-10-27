@@ -12,12 +12,13 @@ struct option long_option[] =
     {"duration", 1, NULL, 'd'},
     {"format", 1, NULL, 'o'},
     {"amplitude", 1, NULL, 'a'},
+    {"bitspersample", 1, NULL, 'b'},
     {NULL, 0, NULL, 0},
 };
 
 void show_info(void)
 {
-    printf("  %s version 0.1 release, Copyright (c) %d-%d the SoftWare developers\n", 
+    printf("%s version 0.1 release, Copyright (c) %d-%d the SoftWare developers\n", 
             NAME, 2014, 2014);
     printf("  built on %s %s with %s %s\n", __DATE__, __TIME__, CC_TYPE, CC_VERSION);
 }
@@ -25,13 +26,14 @@ void help(void)
 {
     printf(
         "\n  Usage: icanwav [OPTION] ...\n"
-        "    -h,--help	help\n"
-        "    -r,--rate	stream rate in Hz\n"
-        "    -c,--channels	count of channels in stream\n"
-        "    -f,--frequency	sine wave frequency in Hz\n"
-        "    -d,--duration	audio duration in seconds\n"
-        "    -o,--format	sample format\n"
-        "    -a,--amplitude amplitude is in db\n"
+        "    -h,--help          help\n"
+        "    -r,--rate          stream rate in Hz\n"
+        "    -c,--channels      count of channels in stream\n"
+        "    -f,--frequency     sine wave frequency in Hz\n"
+        "    -d,--duration      audio duration in seconds\n"
+        "    -o,--format        sample format\n"
+        "    -a,--amplitude     amplitude is in db\n"
+        "    -b,--bitspersample bits per samples\n"
         "\n");
 }
 
@@ -65,10 +67,11 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
     int freq;
     int period_time;
     int decibel;
+    int bps;
 
     while (1) {
         int c;
-        if ((c = getopt_long(argc, argv, "hr:c:f:d:o:a:xyz", long_option, NULL)) < 0){
+        if ((c = getopt_long(argc, argv, "hr:c:f:d:o:a:b:xyz", long_option, NULL)) < 0){
             if(argc == 1)
                 morehelp = 2;
             break;
@@ -109,6 +112,14 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
                 decibel = decibel < 0 ? -decibel : decibel;
                 decibel = decibel / 6;
                 optinfo->decibel = decibel;
+                break;
+            case 'b':
+                bps = atoi(optarg);
+                bps = bps < 8 ? 8 : bps;
+                bps = bps >32 ? 32: bps;
+                if(bps % 8 != 0)
+                    bps = bps / 8 * 8;
+                optinfo->bps = bps;
                 break;
             case 'x':
                 morehelp = 1;

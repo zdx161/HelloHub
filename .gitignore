@@ -1,6 +1,7 @@
 *.o
 *.out
 tags
-wav
+icanwav
+*.wav
 *.so
 *.a

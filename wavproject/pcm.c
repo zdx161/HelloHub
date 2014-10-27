@@ -2,11 +2,12 @@
 #include <math.h>
 #include "pcm.h"
 
-void generate_sine(int offset, int count, double *_phase, int freq, AudioInfo info, uchar *pcm)
+void generate_sine(int offset, int count, double *_phase, AudioInfo info, uchar *pcm)
 {
     int channels = info.channels;
     int format_bits = info.bps;
     int rate = info.rate;
+    int freq = info.frequency;
     static double max_phase = 2. * M_PI;
     double phase = *_phase;
     double step = max_phase*freq/(double)rate;

@@ -11,6 +11,7 @@ typedef struct AUDIO_INFO{
     int bps;
     int decibel;
     int duration;
+    int frequency;
 } AudioInfo;
 
 typedef unsigned char uchar;

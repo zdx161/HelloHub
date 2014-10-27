@@ -46,6 +46,7 @@ void print_config(AudioInfo optinfo)
     printf("  bitspersample: %d bps\n", optinfo.bps);
     printf("  amplitude:     %d db\n", optinfo.decibel*6);
     printf("  duration:      %d s\n", optinfo.duration);
+    printf("  frequency:     %d HZ\n", optinfo.frequency);
     //printf("***********************************************************\n");
     //printf("   \n");
 }
@@ -57,6 +58,7 @@ void set_default_config(AudioInfo *definfo)
     definfo->bps = 16;
     definfo->decibel = 0;
     definfo->duration = 10;
+    definfo->frequency = 440;
 }
 
 int parse_option(int argc, char **argv, AudioInfo *optinfo)
@@ -97,6 +99,7 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
                 freq = atoi(optarg);
                 freq = freq < 50 ? 50 : freq;
                 freq = freq > 5000 ? 5000 : freq;
+                optinfo->frequency = freq;
                 break;
             case 'd':
                 period_time = atoi(optarg);

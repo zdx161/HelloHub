@@ -38,7 +38,7 @@ void write_wav(AudioInfo info, uchar *pcm, int size)
     int ret = 0;
     FILE *fp = NULL;
 
-    sprintf(name, "%dch_%dHZ_%dbits_%ddb_sine.wav", info.channels, info.rate, info.bps,info.decibel*6);
+    sprintf(name, "%dch_%dHZ_%dbits_%ddb_%dHZ_sine.wav", info.channels, info.rate, info.bps, info.decibel*6, info.frequency);
     //printf("name is %s\n", name);
 
     fp = fopen(name, "wb");

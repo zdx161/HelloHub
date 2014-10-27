@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     }
     
     memset(pcm, 0, size);
-    generate_sine(0, period, &_phase, freq, info, pcm);
+    generate_sine(0, period, &_phase, info, pcm);
     write_wav(info, pcm, size); //need implment: done
 
     if(ret == 0){

@@ -9,7 +9,7 @@ void write_wav_header(void *header, AudioInfo info, int period)
     descriptor = (ChuckDes *) header;
     descriptor->ChunkID = 'R' | 'I'  << 8  | 'F' << 16 | 'F' << 24;
     //printf("ID:0x%x\n", descriptor->ChunkID);
-    descriptor->ChunkSize = period + 4 + 4 + 36; 
+    descriptor->ChunkSize = period + 36; //chunksize = filesize-8 (sizeof(RIFF) + sizeof(chunksize)) 
     descriptor->Format = 'W' | 'A' << 8 | 'V' << 16 | 'E' << 24;
     //printf("WAV:0x%x\n", descriptor->Format);
 
@@ -27,7 +27,7 @@ void write_wav_header(void *header, AudioInfo info, int period)
 
     SubchunkData * data = (SubchunkData*)(header+sizeof(ChuckDes)+sizeof(SubchunkFMT));
     data->Subchunk2ID = 'd' | 'a' << 8 | 't' << 16 | 'a' << 24;
-    data->Subchunk2Size = period + 4 + 4;
+    data->Subchunk2Size = period; //only pcm size, 36bytes contain sizeof(data) and sizeof(subchunk2size)
 }
 
 void write_wav(AudioInfo info, uchar *pcm, int size)

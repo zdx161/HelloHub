@@ -44,7 +44,7 @@ void print_config(AudioInfo optinfo)
     printf("  channels:      %d ch\n", optinfo.channels);
     printf("  samplerate:    %d HZ\n", optinfo.rate);
     printf("  bitspersample: %d bps\n", optinfo.bps);
-    printf("  amplitude:     %d db\n", optinfo.decibel*6);
+    printf("  amplitude:     %d db\n", optinfo.decibel);
     printf("  duration:      %d s\n", optinfo.duration);
     printf("  frequency:     %d HZ\n", optinfo.frequency);
     //printf("***********************************************************\n");
@@ -113,7 +113,7 @@ int parse_option(int argc, char **argv, AudioInfo *optinfo)
             case 'a':
                 decibel = atoi(optarg);
                 decibel = decibel < 0 ? -decibel : decibel;
-                decibel = decibel / 6;
+                decibel = decibel;
                 optinfo->decibel = decibel;
                 break;
             case 'b':

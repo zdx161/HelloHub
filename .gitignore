@@ -2,6 +2,7 @@
 *.out
 tags
 icanwav
+mixer
 *.wav
 *.so
 *.a

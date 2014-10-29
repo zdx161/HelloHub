@@ -20,17 +20,19 @@ void generate_sine(int offset, int count, double *_phase, AudioInfo info, uchar 
     uint maxval;
     //unsigned int maxval = (1 << (format_bits - info.decibel - 1)) - 1;
     maxval = (1 << (format_bits - 1)) - 1;
-    
+    //printf("maxval is %d\n", maxval);    
+
 #if 0
     if(format_bits/2 >= info.decibel)
         maxval = (1 << (format_bits - info.decibel - 1)) - 1;
     else
         maxval = (1 << (format_bits - 1)) - 1;
 #endif
-    double nosie =  pow((double)10, (double)(info.decibel / 20));
-    double singles = ((double)(maxval)) / nosie;
-    maxval = (uint)singles;
-    //printf("maxval:%u\n", maxval);
+
+    double maxvald = (double)maxval;
+    double val = pow((double)10, -((double)info.decibel)/((double)20));
+    maxval = (uint)(val * maxvald + 0.5f);
+    //printf("maxval is %d\n", maxval);
     int bps = format_bits / 8;  /* bytes per sample */
     //int phys_bps = 16 / 8;
     int big_endian = 0;

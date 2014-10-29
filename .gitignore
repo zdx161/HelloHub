@@ -4,5 +4,6 @@ tags
 icanwav
 mixer
 *.wav
+*.pcm
 *.so
 *.a

@@ -71,9 +71,27 @@ int main(int argc, char ** argv)
    }
 
    printf("pcmsize2: %d\n", pcmsize2);
-#if 1
+    
    short sample1 = 0;
    short sample2 = 0;
+   while(1){
+   int ret1 = fread(&sample1, sizeof(short), 1, fp1);
+   int ret2 = fread(&sample2, sizeof(short), 1, fp2);
+       if(ret1 > 0 && ret2 > 0 ){
+           short sample =(short)((sample1 + sample2) - (sample1 * sample2 >> 0x10));            
+           if(sample > 32767)
+               sample = 32767;
+           else if(sample < -32768)
+               sample = -32768;
+           fwrite(&sample, 2, 1, fout);
+
+       }
+       else
+           break;
+   }
+#if 0
+   int sample1 = 0;
+   int sample2 = 0;
    b = 0;
    while((c = fgetc(fp1)) != EOF){
        int c1 = fgetc(fp2);
@@ -82,6 +100,19 @@ int main(int argc, char ** argv)
        b++;
        if(b == 2){
            b = 0;
+           short sample = 0;
+           sample =(short)sample1;
+#if 0
+           if(sample1 < 0 && sample2 < 0){
+               sample = (short)(sample1+sample2-(sample1*sample2/(-(pow(2,16-1)-1))));
+           }
+           else
+               sample = (short)(sample1+sample2-(sample1*sample2/(pow(2,16-1)-1)));
+#endif
+         fwrite((char*)(&sample), 1, 1,fout);
+         fwrite((char*)(&sample + 1), 1, 1, fout);
+                
+#if 0
            short sampleout = 0;
            int sample = 0;
            sample = (sample1 + sample2) - (sample1 * sample2 >> 0x10);            
@@ -97,10 +128,8 @@ int main(int argc, char ** argv)
            sd = (char)((sampleout >> 8) | 0xff);
            fwrite(&sd, 1, 1, fout);
            sample1 = sample2 = 0;
+#endif
        }
-    
-       //pcmsize1 = pcmsize1 | ((((unsigned int)c) & 0xff) << (8 * b));
-
    }
 #endif
 

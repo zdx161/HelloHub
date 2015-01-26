@@ -36,7 +36,7 @@ typedef struct node{
     char value;
     struct node *p;
     struct node *nL;
-    struct node *lR;
+    struct node *nR;
     struct node *n;
 } Node;
 
@@ -46,6 +46,28 @@ void createnode(Node **node)
     if(*node == NULL){
         *node = calloc(1, sizeof(Node));
     }
+}
+
+int createtree(Node **head, Node *node)
+{
+    
+    if(*head == NULL){
+        *head = calloc(1, sizeof(Node));
+    }
+
+    if((*head)->nL == NULL && node != NULL){
+        (*head)->nL = node;
+        (*head)->value += node->value;
+        node->p = *head;
+    }else if((*head)->nR == NULL && node != NULL){
+        (*head)->nR = node;
+        (*head)->value += node->value;
+        node->p = *head;
+    }else{
+        printf("add node failed.\n");
+        return -1;
+    }
+    return 0;
 }
 
 int main(int argc, char ** argv)
@@ -69,15 +91,32 @@ int main(int argc, char ** argv)
 #endif
     char times[7] = {1,1,2,2,2,3,4};
     Node * p[7] = {NULL};
+    //Node * tree;
     int i;
     for(i = 0; i < 7; i++){
         createnode(&p[i]);
         p[i]->value = times[i];
     }
+    Node *head = NULL;
+    Node *tree = NULL;
+    int ret = 0;
     for(i = 0; i < 7; i++){
         printf("value:%d\n", p[i]->value);
-        free(p[i]);
+        ret = createtree(&head, p[i]);
+        if(ret == -1){
+            i--;
+            createtree(&tree, head);
+            head = tree;
+            tree = NULL;
+        }
+        //free(p[i]);
     }
+
+    for(tree = head; tree != NULL; tree = tree->nL){
+        printf("nL: %d\n", tree->value);
+    }
+
+    
     
     return 0;
 }

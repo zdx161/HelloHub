@@ -70,6 +70,28 @@ int createtree(Node **head, Node *node)
     return 0;
 }
 
+void printtree(Node * head)
+{
+    if(head != NULL){
+        printf("value: %d\n", head->value);
+        printtree(head->nL);
+        printtree(head->nR);
+    }else{
+        //do nothings;
+        return ;
+    }
+}
+
+void freetree(Node * head)
+{
+    if(head != NULL){
+        freetree(head->nL);
+        freetree(head->nR);
+        free(head);
+        head = NULL;
+    }
+}
+
 int main(int argc, char ** argv)
 {
 #if 0
@@ -116,6 +138,9 @@ int main(int argc, char ** argv)
         printf("nL: %d\n", tree->value);
     }
 
+    printtree(head);
+
+    freetree(head);
     
     
     return 0;

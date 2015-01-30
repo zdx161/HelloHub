@@ -1,3 +1,9 @@
+/** ****************************************************************
+ ** Merge sort(also commonly spelled mergesort): is an O(nlogn) 
+ ** comparison-based sorting algorithm.
+ **
+ ** wikipedia link: http://en.wikipedia.org/wiki/Merge_sort
+ ** ***************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 

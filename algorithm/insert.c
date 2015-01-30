@@ -1,3 +1,11 @@
+/** **************************************************************
+ ** Insertion sort: is a simple sorting algorithm that
+ ** builds the final sorted array (or list) one item at a
+ ** time.
+ **
+ ** wikipedia link: http://en.wikipedia.org/wiki/Insertion_sort
+ ** **************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -7,6 +15,7 @@ void insert(int *data, int size)
 {
     int i,j,k,tmp;
 #if 0
+    //myself:
     for(i = 1; i < size; i++){
         for(j = 0; j < i; j++){
             if(data[j] > data[i]){
@@ -20,6 +29,7 @@ void insert(int *data, int size)
         }
     }
 #else
+    //introduce algorithm
     int key;
     for(i = 1; i < size; i++){
         key = data[i];

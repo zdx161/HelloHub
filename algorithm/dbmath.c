@@ -23,9 +23,9 @@ int main()
     double maxvald = (double)((1 << 15) - 1); //(Most significant bit)MSB is sign
     int maxvali = (1 << 15) - 1;
     printf("maxvald = %lf, maxvali = %d\n", maxvald, maxvali);
-    for(db = 0; db < 16*6; db++){
+    for (db = 0; db < 16*6; db++) {
         double val = pow((double)10, -((double)db)/((double)20));
-        printf("s/n of %ddb is %lf, maxval1: %lf : %d  maxval2: %d\n", db, val,
+        printf("s/n of %2ddb is %8.6lf, maxval1: %12.6lf : %5d  maxval2: %5d\n", db, val,
                 val * maxvald, (int)(val * maxvald + 0.5f) ,(int)(maxvali * val)); //+0.5f: do round
     }
 

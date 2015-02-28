@@ -1,0 +1,26 @@
+1. the first way to compile shared lib 
+   shared lib: 
+   gcc -c -fpic simplemath.c
+   gcc -shared -o libsimplemath.so simplemath.o 
+   elf:
+   gcc -rdynamic -o test main.c -ldl
+   export LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH //runtime: configurate the path to load shared lib
+
+2. the second way to compile shared lib
+   compile:
+   #include head file
+   gcc -c -fpic simplemath.c
+   gcc -shared -o libsimplemath.so simplemath.o 
+   gcc -L $(pwd) -o test main.c -lsimplemath //-L:the shared lib path for compile
+   runtime:
+   export LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH //runtime: configurate the path to load shared lib
+
+3. shell command in makefile
+   @+cmd: eliminate echo in one line;
+   one process for one line
+   http://blog.sina.com.cn/s/blog_96b8a15401013ff7.html
+
+
+4. the different of $() and $$():
+   $(): Makefile variable
+   $$(): shell variable

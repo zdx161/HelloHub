@@ -50,11 +50,11 @@ void siftdown(int *heap, int index, int node)
     }
 
     for (i = index; i > 1; i--) {
-        heap[i] = heap[i - 1];
+        heap[i] = heap[i - 1]; //empty the first data site for new node.
     }
 
-    heap[i] = node;
-    for (i = 1; condition = i; ) {
+    heap[i] = node; //assign data to the first site.
+    for (i = 1; condition = i; ) { //sift down sort
         if (index >= i * 2 && heap[i] > heap[i*2]) {
             swap(&heap[i], &heap[i * 2]);
             i = i * 2;

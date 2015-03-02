@@ -1,0 +1,7 @@
+some questions for running shell script:
+
+1. the defference of ./ and sh
+   ./:same process, source command is oK
+   sh:other process, source command can not be found
+
+

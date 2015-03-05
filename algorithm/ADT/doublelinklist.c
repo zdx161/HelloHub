@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct node_{
-    struct node_ *fwd;
-    struct node_ *bwd;
+typedef struct node {
+    struct node * fwd;
+    struct node * bwd;
     int data;
 } DList;
 
@@ -14,17 +14,17 @@ enum {
 
 int insertnode(DList *head, int data)
 {
-    DList *rootp;
-    DList *nextp;
-    DList *newp;
+    DList * rootp;
+    DList * nextp;
+    DList * newp;
 
     for (rootp = head; (nextp = rootp->fwd) != NULL; rootp = nextp) {
-        if (data < rootp->data) {
+        if (data < nextp->data) {
             break;
         }
     }
 
-    newp = (DList *)calloc(1, sizeof(DList));
+    newp = (DList *) calloc(1, sizeof(DList));
 
     if (newp == NULL) {
         printf("allocate new node failed.\n");
@@ -34,24 +34,14 @@ int insertnode(DList *head, int data)
     newp->data = data;
 
     if (nextp == NULL) {
-        if (rootp == head) {
-            rootp->fwd = newp;
-            //rootp->bwd = NULL;//newp;
-            newp->bwd = rootp;
-            //newp->fwd = NULL;//rootp;
-        } else {
-            //newp->fwd = NULL;//head;
-            //head->bwd = newp;
-            newp->bwd = rootp;
-            rootp->fwd = newp;
-        }
+        rootp->fwd = newp;
+        newp->bwd = rootp;
     } else {
         newp->fwd = nextp;
         newp->bwd = rootp;
         rootp->fwd = newp;
         nextp->bwd = newp;
     }
-
 
     return TRUE;
 }
@@ -65,11 +55,27 @@ int createlist(DList **head)
     return *head == NULL ? FALSE : TRUE;
 }
 
-void printlist(DList * head)
+void printheadlist(DList * head)
 {
+    head = head->fwd;
+
     while (head != NULL) {
         printf("%d ", head->data);
         head = head->fwd;
+    }
+
+    printf("\n");
+}
+
+void printendlist(DList * head)
+{
+    DList * end;
+    end = head;
+    while ((end = end->fwd)->fwd != NULL) ;
+
+    while (end != head) {
+        printf("%d ", end->data);
+        end = end->bwd;
     }
 
     printf("\n");
@@ -98,8 +104,11 @@ int main()
         insertnode(head, data[i]);
     }
 
-    printlist(head); //show data after sorting.
+    printheadlist(head); //show data after sorting.
+
+    printendlist(head);
 
     releaselist(head); //free node memory.
+
     return 0;
 }

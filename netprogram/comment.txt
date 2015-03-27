@@ -1,1 +1,2 @@
 study net program
+1. use socket to implement IPC(Inter-process communication)

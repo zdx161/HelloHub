@@ -1,0 +1,2 @@
+1. __func__: defined in C99 standard, __FUNCTION__ is for C89/90 and is not standard.
+

@@ -32,18 +32,18 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    if (cpid == 0) {
+    if (cpid == 0) { //child
         close(pipefd[1]);
 
         while (read(pipefd[0], &buf, 1) > 0) {
-            write(STDOUT_FILENO, &buf, 1);
+            write(STDOUT_FILENO, &buf, 1); //STDOUT_FILENO: int and no have buffer
         }
 
         write(STDOUT_FILENO, "\n", 1);
         close(pipefd[0]);
         _exit(EXIT_SUCCESS);
 
-    } else {
+    } else { //parent
         close(pipefd[0]);
         write(pipefd[1], argv[1], strlen(argv[1]));
         close(pipefd[1]);

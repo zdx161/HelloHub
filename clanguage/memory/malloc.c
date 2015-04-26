@@ -10,9 +10,10 @@ int main()
         printf("malloc failed.\n");
         exit(EXIT_FAILURE);
     }
-    printf("addr: %p\n", ptr);
-    
+
     //0x51 = 5 * 16 + 1 = 81 = 64 + 17
+    printf("addr: 0x%x\n", ptr);
+
     for(i = 16; i > 0; i--){
         printf("0x%x ", *((char*)(ptr-i)));
     }

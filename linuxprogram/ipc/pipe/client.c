@@ -39,7 +39,7 @@ void server(int readfd, int writefd)
         printf("end-of-file while reading pathname");
         exit(0);
     }
-    
+
     buff[n] = '\0';   /* null terminate pathname */
 
     if ((fd = open(buff, O_RDONLY)) < 0) {
@@ -51,7 +51,7 @@ void server(int readfd, int writefd)
         /* open succeeded: copy file to IPC channel */
         while((n = read(fd, buff, MAXLINE)) > 0)
             write(writefd, buff, n);
-        
+
         close(fd);
     }
 }

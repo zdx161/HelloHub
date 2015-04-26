@@ -1,20 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "volume.h"
 
 
 typedef struct {
     int mIndex;
     float mDBAttenuation;
 } VolumeCurvePoint;
-
-typedef unsigned int uint32_t;
-
-typedef struct {
-    uint32_t volL;
-    uint32_t volR;
-} Volume;
-
 
 enum { VOLMIN = 0, VOLKNEE1 = 1, VOLKNEE2 = 2, VOLMAX = 3, VOLCNT = 4};
 
@@ -25,6 +18,15 @@ const VolumeCurvePoint curve[VOLCNT] = {
 enum {mIndexMin = 0, mIndexMax = 15};
 
 uint32_t volumeRL = 0x10001000; //8.24 format
+
+int32_t mulRL(int left, uint32_t inRL, uint32_t vRL)
+{
+    if (left) {
+        return (int16_t)(inRL&0xFFFF) * (int16_t)(vRL&0xFFFF);
+    } else {
+        return (int16_t)(inRL>>16) * (int16_t)(vRL>>16);
+    }
+}
 
 Volume applyvolume(float amplification)
 {
@@ -42,7 +44,6 @@ Volume applyvolume(float amplification)
     // This additional clamping is needed in case chain->setVolume_l() overshot
     vl = (vl + (1 << 11)) >> 12;
     vr = (vr + (1 << 11)) >> 12;
-    
 
     vol.volL = vl;
     vol.volR = vr;
@@ -50,11 +51,8 @@ Volume applyvolume(float amplification)
     return vol;
 }
 
-
-
 float computeamplification(int indexInUi)
 {
-
     int nbSteps = 1 + curve[VOLMAX].mIndex - curve[VOLMIN].mIndex;
     int volIdx = (nbSteps * (indexInUi - mIndexMin)) / (mIndexMax - mIndexMin);
 
@@ -71,7 +69,6 @@ float computeamplification(int indexInUi)
         return 1.0f;
     }
 
-
     // linear interpolation in the attenuation table in dB
     float decibels = curve[segment].mDBAttenuation +
             ((float)(volIdx - curve[segment].mIndex)) *
@@ -80,21 +77,20 @@ float computeamplification(int indexInUi)
                     ((float)(curve[segment+1].mIndex -
                             curve[segment].mIndex)) );
 
+    printf("indexInUi->%d: decibels->%f\n", indexInUi, decibels);
     float amplification = exp( decibels * 0.115129f); // exp( dB * ln(10) / 20 )
 
     return amplification;
 }
 
-#define FUN_TEST
+//#define FUN_TEST
 #ifdef FUN_TEST
 int main()
 {
-
     int index;
     float amplification;
     uint32_t volL = 0;
 
-    
     for (index = mIndexMin; index <= mIndexMax; index ++) {
         amplification = computeamplification(index);
         volL = applyvolume(amplification).volL;

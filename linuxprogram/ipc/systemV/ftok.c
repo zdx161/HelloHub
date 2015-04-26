@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
 
     /////////////////////////////////////slot/////////////////////////////
     int i, msqid;
-    
+
     for (i = 0; i < 10; i++) {
         msqid = msgget(IPC_PRIVATE, SVMSG_MODE | IPC_CREAT);
         printf("msqid = %d\n", msqid);

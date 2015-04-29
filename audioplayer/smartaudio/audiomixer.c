@@ -1,4 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+#define int int32_t
+#define short int16_t
+
+#if 0
 int32_t mulAddRL(int left, uint32_t inRL, uint32_t vRL, int32_t a)
 {
     if (left) {
@@ -7,6 +13,7 @@ int32_t mulAddRL(int left, uint32_t inRL, uint32_t vRL, int32_t a)
         return a + (int16_t)(inRL>>16) * (int16_t)(vRL>>16);
     }
 }
+#endif
 
 static inline int16_t clamp16(int32_t sample)
 {
@@ -33,34 +40,42 @@ static inline int16_t clamp16(int32_t sample)
 #ifdef TEST_MIXER
 int main(int argc, char ** argv)
 {
-    FILE * in1, * in2;
+    FILE * in1, * in2, * out;
     in1 = NULL;
     in2 = NULL;
+    out = NULL;
     
     short din1[32] = {0};
     short din2[32] = {0};
+    int dout[16] = {0};
+    int tout[32] = {0};
     int dnum1 = 0;
     int dnum2 = 0;
     int num;
 
     in1 = fopen(argv[1], "rb");
     in2 = fopen(argv[2], "rb");
+    out = fopen(argv[3], "a+");
     
-    if(in1 == NULL || in2 == NULL)
+    if(in1 == NULL || in2 == NULL || out == NULL)
         goto error;
+
+    fseek(in1, long(8*16+10), SEEK_SET);
+    fseek(in2, long(4*16+14), SEEK_SET);
 
     while(1) {
         dnum1 = fread(din1, sizeof(short), 32, in1);
         dnum2 = fread(din2, sizeof(short), 32, in2);
 
-        if(dnum1 != 32 || dnum2 != 32)
+        if (dnum1 != 32 || dnum2 != 32)
             break;
-        
-        for (num = 0; num < 32; num++) {
-            
-        }
-        
 
+        for (num = 0; num < 32; num++) {
+            tout[num] = (int)(din1[num]) + (int)(din2[num]);
+        }
+
+        ditherAndClamp(dout, tout, 16);
+        fwrite(dout, sizeof(int), 16, out);
     }
 
 error:
@@ -68,6 +83,8 @@ error:
         fclose(in1);
     if(in2 != NULL)
         fclose(in2);
+    if(out != NULL)
+        fclose(out);
 
     return 0;
 }

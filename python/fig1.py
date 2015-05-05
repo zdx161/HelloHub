@@ -9,9 +9,9 @@ ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data',0))
 
 
-x = linspace(0, 20, 20, endpoint = False)
+x = linspace(0, 16, 17, endpoint = False)
 y = 100 * x / 15
-ax.plot(x, y, color = "blue", linewidth = 2.5, linestyle = "-", label = "line")
+ax.plot(x, y, color = "blue", linestyle = "-", label = "line")
 ax.plot(x, y, 'ro')
 legend(loc = 'upper left')
 show()

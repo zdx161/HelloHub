@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define int int32_t
-#define short int16_t
+typedef int int32_t;
+typedef unsigned int uint32_t;
+typedef short int16_t;
 
 #if 0
 int32_t mulAddRL(int left, uint32_t inRL, uint32_t vRL, int32_t a)
@@ -19,8 +20,8 @@ static inline int16_t clamp16(int32_t sample)
 {
     if ((sample>>15) ^ (sample>>31))
         sample = 0x7FFF ^ (sample>>31);
-    return sample; 
-}     
+    return sample;
+}
 
  void ditherAndClamp(int32_t* out, int32_t const *sums, size_t c)
 {
@@ -28,8 +29,8 @@ static inline int16_t clamp16(int32_t sample)
     for (i=0 ; i<c ; i++) {
         int32_t l = *sums++;      
         int32_t r = *sums++;      
-        int32_t nl = l >> 12;     
-        int32_t nr = r >> 12;     
+        int32_t nl = l >> 12; //effect on endian when sums don't multiply volume(f8.24)
+        int32_t nr = r >> 12;
         l = clamp16(nl);
         r = clamp16(nr);
         *out++ = (r<<16) | (l & 0xFFFF); 
@@ -55,13 +56,13 @@ int main(int argc, char ** argv)
 
     in1 = fopen(argv[1], "rb");
     in2 = fopen(argv[2], "rb");
-    out = fopen(argv[3], "a+");
+    out = fopen(argv[3], "wb");
     
     if(in1 == NULL || in2 == NULL || out == NULL)
         goto error;
 
-    fseek(in1, long(8*16+10), SEEK_SET);
-    fseek(in2, long(4*16+14), SEEK_SET);
+    fseek(in1, (long)(8*16+10), SEEK_SET);
+    fseek(in2, (long)(4*16+14), SEEK_SET);
 
     while(1) {
         dnum1 = fread(din1, sizeof(short), 32, in1);
@@ -71,7 +72,7 @@ int main(int argc, char ** argv)
             break;
 
         for (num = 0; num < 32; num++) {
-            tout[num] = (int)(din1[num]) + (int)(din2[num]);
+            tout[num] = (((uint32_t)(din1[num]) * (uint32_t)4096) + ((uint)(din2[num]) * (uint32_t)4096));
         }
 
         ditherAndClamp(dout, tout, 16);

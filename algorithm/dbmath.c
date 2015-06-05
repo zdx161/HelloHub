@@ -11,7 +11,7 @@
 #include <math.h>
 
 
-//db = 20log(s/n)
+//db = 20log10(s/n)
 //s/n = 10 ^ (db/20)
 //1bit = 6db
 

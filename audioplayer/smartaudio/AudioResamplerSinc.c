@@ -115,19 +115,19 @@ int resample(int32_t* out, size_t outFrameCount, Buffer_t* mBuffer)
 
     while (outputIndex < outputSampleCount) {
 #if 1
-            const uint32_t phaseIndex = phaseFraction >> kNumPhaseBits;
-            if (phaseIndex == 1) {
-                // readframe one frame
-                printf("phaseIndex == 1\n");
-                readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
-            } else if (phaseIndex == 2) {
-                // readframe 2 frames
-                printf("phaseIndex == 1\n");
-                readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
-                inputIndex++;
-                readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
-                //inputIndex++;
-            }
+        const uint32_t phaseIndex = phaseFraction >> kNumPhaseBits;
+        if (phaseIndex == 1) {
+            // readframe one frame
+            printf("phaseIndex == 1\n");
+            readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
+        } else if (phaseIndex == 2) {
+            // readframe 2 frames
+            printf("phaseIndex == 1\n");
+            readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
+            inputIndex++;
+            readframe(&impulse, &phaseFraction, mBuffer->i16, inputIndex);
+            //inputIndex++;
+        }
 #endif
         int16_t *in = mBuffer->i16;
         const size_t frameCount = mBuffer->frameCount;
@@ -198,8 +198,7 @@ void readframe(int16_t** impulse, uint32_t* phaseFraction, const int16_t* in, si
 
 void filterCoefficient( int32_t* l, int32_t* r, uint32_t phase, const int16_t *samples)
 {
-    // compute the index of the coefficient on the positive side and
-    // negative side
+    // compute the index of the coefficient on the positive side and negative side
     uint32_t indexP = (phase & cMask) >> cShift;
     uint16_t lerpP  = (phase & pMask) >> pShift;
     uint32_t indexN = (-phase & cMask) >> cShift;

@@ -1,0 +1,4 @@
+android-like hash implement
+(1). strchr
+
+(2). strtok_r

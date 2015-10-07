@@ -1,0 +1,8 @@
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := cp-demangle.c
+LOCAL_CFLAGS += -DHAVE_STRING_H -DHAVE_STDLIB_H -DIN_GLIBCPP_V3
+LOCAL_MODULE := libgccdemangle
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_HOST_SHARED_LIBRARY)

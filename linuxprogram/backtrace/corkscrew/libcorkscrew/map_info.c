@@ -62,10 +62,12 @@ static map_info_t* parse_maps_line(const char* line)
         mi->data = NULL;
         memcpy(mi->name, name, name_len);
         mi->name[name_len] = '\0';
+#if 1
         printf("Parsed map: start=0x%08x, end=0x%08x, "
               "is_readable=%d, is_writable=%d, is_executable=%d, name=%s\n",
               mi->start, mi->end,
               mi->is_readable, mi->is_writable, mi->is_executable, mi->name);
+#endif
     }
     return mi;
 }

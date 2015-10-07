@@ -21,7 +21,7 @@ int do_backtrace(float /* just to test demangling */) {
                           line, MAX_BACKTRACE_LINE_LENGTH);
     if (backtrace_symbols[i].symbol_name != NULL) {
       // get_backtrace_symbols found the symbol's name with dladdr(3).
-      fprintf(stderr, "  %s\n", line);
+      fprintf(stderr, "  %s(0x%08x)\n", line, (unsigned int)frames[i].absolute_pc);
     } else {
       // We don't have a symbol. Maybe this is a static symbol, and
       // we can look it up?

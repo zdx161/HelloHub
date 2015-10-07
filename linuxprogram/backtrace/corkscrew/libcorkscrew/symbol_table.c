@@ -57,7 +57,7 @@ static int bcompar(const void *key, const void *element) {
 
 symbol_table_t* load_symbol_table(const char *filename) {
     symbol_table_t* table = NULL;
-    printf("Loading symbol table from '%s'.\n", filename);
+    //printf("Loading symbol table from '%s'.\n", filename);
 
     int fd = open(filename, O_RDONLY);
     if (fd < 0) {
@@ -165,9 +165,11 @@ symbol_table_t* load_symbol_table(const char *filename) {
                 table->symbols[symbol_index].name = strdup(dynstr + dynsyms[i].st_name);
                 table->symbols[symbol_index].start = dynsyms[i].st_value;
                 table->symbols[symbol_index].end = dynsyms[i].st_value + dynsyms[i].st_size;
+#if 0
                 printf("  [%d] '%s' 0x%08x-0x%08x (DYNAMIC)\n",
                         symbol_index, table->symbols[symbol_index].name,
                         table->symbols[symbol_index].start, table->symbols[symbol_index].end);
+#endif
                 symbol_index += 1;
             }
         }
@@ -183,9 +185,11 @@ symbol_table_t* load_symbol_table(const char *filename) {
                 table->symbols[symbol_index].name = strdup(str + syms[i].st_name);
                 table->symbols[symbol_index].start = syms[i].st_value;
                 table->symbols[symbol_index].end = syms[i].st_value + syms[i].st_size;
+#if 0
                 printf("  [%d] '%s' 0x%08x-0x%08x\n",
                         symbol_index, table->symbols[symbol_index].name,
                         table->symbols[symbol_index].start, table->symbols[symbol_index].end);
+#endif
                 symbol_index += 1;
             }
         }

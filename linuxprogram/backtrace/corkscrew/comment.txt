@@ -14,3 +14,8 @@
     $+($^):
     $<:
     $@:
+5. c language function Call c++ languange function
+    if have header file: #ifdef __cplusplus extern "C" { #endif  =>  function declaration => #ifdef __cplusplus } #endif
+    if no header file: extern "C" function definition
+
+    c function need to declarate extern "C" function declaration

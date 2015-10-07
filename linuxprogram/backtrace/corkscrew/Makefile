@@ -35,9 +35,10 @@ libbacktrace.so:$(objects)
 $(objects):%.o:%.c
 	gcc $(DFLAGS) $(IFLAGS) -g -std=gnu99 -m32 -c $< -o $@
 
-test:test.o
+test:bin/test.o
 	gcc -rdynamic -g -std=gnu99 -m32 -L$(shell pwd) $< -o $@ -ldl -lbacktrace
-test.o:test.cpp
+
+bin/test.o:bin/test.cpp
 	gcc -Iinclude -g -std=gnu99 -m32 -c $< -o $@
 
 .PHONY: clean all

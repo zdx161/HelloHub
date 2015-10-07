@@ -18,7 +18,6 @@
  * Backtracing functions for x86.
  */
 
-//#define _GNU_SOURCE
 #define LOG_TAG "Corkscrew"
 
 #include "../backtrace-arch.h"

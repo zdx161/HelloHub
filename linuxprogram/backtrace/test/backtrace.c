@@ -3,38 +3,32 @@
 #include <stdlib.h>
 
 /* Obtain a backtrace and print it to stdout. */
-void
-print_trace (void)
+void print_trace (void)
 {
+    void *array[10];
+    size_t size;
+    char **strings;
+    size_t i;
 
-      void *array[10];
-        size_t size;
-          char **strings;
-            size_t i;
+    size = backtrace (array, 10);
+    strings = backtrace_symbols (array, size);
 
-              size = backtrace (array, 10);
-                strings = backtrace_symbols (array, size);
+    printf ("Obtained %zd stack frames.\n", size);
 
-                  printf ("Obtained %zd stack frames.\n", size);
-                  
-                    for (i = 0; i < size; i++)
-                             printf ("%s\n", strings[i]);
-                    
-                      free (strings);
+    for (i = 0; i < size; i++)
+        printf ("%s\n", strings[i]);
+    
+    free (strings);
 }
 
 /* A dummy function to make the backtrace more interesting. */
-void
-dummy_function (void)
+void dummy_function (void)
 {
-
-      print_trace ();
+    print_trace ();
 }
 
-int
-main (void)
+int main (void)
 {
-
-      dummy_function ();
-        return 0;
+    dummy_function ();
+    return 0;
 }

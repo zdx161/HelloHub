@@ -21,7 +21,6 @@ void show_backtrace (void) {
 }
 
 void show(){
-
     show_backtrace();
 }
 

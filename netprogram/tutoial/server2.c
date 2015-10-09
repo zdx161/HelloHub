@@ -33,12 +33,14 @@ int main( int argc, char *argv[] )
         perror("ERROR on binding");
         exit(1);
     }
+
     /* Now start listening for the clients, here
      * process will go in sleep mode and will wait
      * for the incoming connection
      */
-    listen(sockfd,5);
+    listen(sockfd, 5);
     clilen = sizeof(cli_addr);
+
     while (1) {
         newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0) {
@@ -69,16 +71,19 @@ int main( int argc, char *argv[] )
 void doprocessing (int sock)
 {
     int n;
+
     char buffer[256];
     bzero(buffer,256);
-    n = read(sock,buffer,255);
+
+    n = read(sock, buffer, 255);
     if (n < 0) {
         perror("ERROR reading from socket");
         exit(1);
     }
 
     printf("Here is the message: %s\n",buffer);
-    n = write(sock,"I got your message",18);
+
+    n = write(sock, "I got your message", 18);
     if (n < 0) {
         perror("ERROR writing to socket");
         exit(1);

@@ -25,7 +25,7 @@ SingleTest::~SingleTest()
     std::cout << "===deconstruct===" << std::endl;
 }
 
-void SingleTest::print(char * s)
+void SingleTest::print(const char * s)
 {
     std::cout << s << std::endl;
 }

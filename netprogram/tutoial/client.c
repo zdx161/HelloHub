@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-#include <strings.h>
+#include <string.h>
 
 
 int main(int argc, char *argv[])
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     serv_addr.sin_port = htons(portno);
 
     /* Now connect to the server */
-    if (connect(sockfd, &serv_addr, sizeof(serv_addr)) < 0) {
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
         perror("ERROR connecting");
         exit(1);
     }
@@ -49,25 +49,25 @@ int main(int argc, char *argv[])
      * will be read by server
      */
     printf("Please enter the message: ");
-    bzero(buffer,256);
-    fgets(buffer,255,stdin);
+    bzero(buffer, 256);
+    fgets(buffer, 255, stdin);
 
     /* Send message to the server */
-    n = write(sockfd,buffer,strlen(buffer));
+    n = write(sockfd, buffer, strlen(buffer));
     if (n < 0) {
         perror("ERROR writing to socket");
         exit(1);
     }
 
     /* Now read server response */
-    bzero(buffer,256);
-    n = read(sockfd,buffer,255);
+    bzero(buffer, 256);
+    n = read(sockfd, buffer, 255);
     if (n < 0) {
         perror("ERROR reading from socket");
         exit(1);
     }
 
-    printf("%s\n",buffer);
+    printf("%s\n", buffer);
 
     return 0;
 }

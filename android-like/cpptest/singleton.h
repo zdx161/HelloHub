@@ -2,13 +2,15 @@
 #define SINGLETON_H
 
 namespace Test{
+
 class SingleTest{
 public:
     static SingleTest * self();
     SingleTest();
     ~SingleTest();
     
-    void print(char * s);
+    void print(const char * s);
 };
+
 }
 #endif

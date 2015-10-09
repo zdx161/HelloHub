@@ -1,0 +1,5 @@
+1. server2.c uses fork system call function for concurrent process request from clients
+2. strings.h is different from string.h:
+    strings.h for 4.3 BSD net socket string operator. for example: bzero bcmp bcopy ... ext.
+    string.h for C89/C99 C language library function. for example: strlen strcat strcpy ... ext.
+

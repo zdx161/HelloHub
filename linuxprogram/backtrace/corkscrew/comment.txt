@@ -1,4 +1,4 @@
-1. gcc compiles failed as follow, need to link stdc++ by -lstdc++. g++ doesn`t do this.
+1. gcc compiles failed as follow, need to link stdc++ by -lstdc++. g++ doesn`t need do this.
     /tmp/ccd2btTo.o:(.eh_frame+0x13): undefined reference to `__gxx_personality_v0'
     collect2: ld returned 1 exit status
 
@@ -7,13 +7,16 @@
     /usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/4.6/libstdc++.a when searching for -lstdc++
     /usr/bin/ld: cannot find -lstdc++
     collect2: ld returned 1 exit status
+
 3. pwd command is different between shell and Makefile
     shell: $(pwd) -> execute pwd and get the current path
     Makefile: $(pwd) -> pwd is common variable, if undefined, the value is NULL, so if you get the current path, need to comply by $(shell pwd)
+
 4. auto variable for make
     $+($^):
     $<:
     $@:
+
 5. c language function Call c++ languange function
     if have header file: #ifdef __cplusplus extern "C" { #endif  =>  function declaration => #ifdef __cplusplus } #endif
     if no header file: extern "C" function definition

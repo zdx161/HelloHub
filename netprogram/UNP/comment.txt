@@ -1,0 +1,1 @@
+1. net port 13 is system using port for daytime service, so private application function uses it, need to get permissions

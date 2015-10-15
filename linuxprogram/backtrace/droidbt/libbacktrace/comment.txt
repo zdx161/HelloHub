@@ -1,7 +1,0 @@
-g++ -shared -fpic -rdynamic -I. -I../include -I/home/zedong_xiong/Mypractice/libunwind/include/ -o libbacktrace.so BacktraceImpl.cpp BacktraceMap.cpp BacktraceThread.cpp thread_utils.c UnwindCurrent.cpp  UnwindMap.cpp UnwindPtrace.cpp main.cpp -ldl -lrt -lpthread  --std=gnu++0x
-
-c++:-std=c++0x or gnu++0x
-
-PRIxPTR/PRIuPTR: define in inttypes.h
-http://www.nongnu.org/avr-libc/user-manual/group__avr__inttypes.html#ga86bc00ee87e8e40787e0681fc34c576a
-http://www.nongnu.org/avr-libc/

@@ -1,0 +1,3 @@
+1. RAII(Resource Acquisition Is initialization): auto_ptr include memory head file
+2. reference-counting smart pointer(RCSPA): tr1::shared_ptr
+3. unique_ptr in C++11

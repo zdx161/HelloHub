@@ -17,7 +17,7 @@ int main()
     int i, rc;
  
     for (i = 0; i < NUM_THREADS; i++)
-    pthread_create(&pid, NULL, &printhello, NULL);
+        pthread_create(&pid, NULL, &printhello, NULL);
 
 
     pthread_exit(NULL);    

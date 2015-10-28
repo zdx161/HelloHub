@@ -1,0 +1,12 @@
+1. the difference between #include <iostream> and #include <iostream>
+    iostream is c++ standard(need std namespace), but iostream.h is nonstandard.
+    note: private header file need the full name.
+
+2. namespace is not same as class name.
+    PreProcessor.cpp:10:5: error: reference to ‘TestPreProcessor’ is ambiguous
+    PreProcessor.h:8:28: error: candidates are: namespace TestPreProcessor { }
+    PreProcessor.h:11:7: error: class TestPreProcessor::TestPreProcessor
+
+3. the difference of class member variable and class member function
+    the class member function is only one, all objects share it.
+    but the class member variable is respective for each object.

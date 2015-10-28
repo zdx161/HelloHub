@@ -21,7 +21,6 @@ int main()
         std::cout << "dynamic cast PhoneMethod to HtcM8Phone failed." << std::endl;
     }
 
-
     //delete pf;
     delete hmp;
     return 0;

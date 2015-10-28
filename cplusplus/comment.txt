@@ -1,3 +1,5 @@
 1. RAII(Resource Acquisition Is initialization): auto_ptr include memory head file
 2. reference-counting smart pointer(RCSPA): tr1::shared_ptr
 3. unique_ptr in C++11
+4. error: insufficient permission for adding an object to repository database .git/objects
+       chown -hR owner:group file

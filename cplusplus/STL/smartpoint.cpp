@@ -65,7 +65,7 @@ T * raii_ptr<T>::get() const
 template<class T>
 T * raii_ptr<T>::operator->() const
 {
-    return this->ptr; 
+    return ptr; 
 }
 
 
@@ -74,10 +74,13 @@ public:
     testraii();
     void print();
     ~testraii();
+     int testnum;
 };
 
 testraii::testraii()
+    :testnum(0)
 {
+    testnum += 1;
     cout << __FUNCTION__ << endl;
 }
 
@@ -93,13 +96,14 @@ void testraii::print()
 
 int main()
 {
-    raii_ptr<testraii> ptr(new testraii);
+    //raii_ptr<testraii> ptr(new testraii);
     //raii_ptr<testraii> ptr2(ptr); //error: deconstruct two times for default copy constructor function
     raii_ptr<testraii> ptr2(NULL); //OK
     (ptr2.operator->())->print(); //???
-    ptr2 = ptr;
-    (ptr.get())->print(); //???
-    ptr->print(); //need to overload -> operator, (ptr.operator->())->print()
+    cout << (ptr2.operator->())->testnum << endl; //difference of members and member function
+    //ptr2 = ptr;
+    //(ptr.get())->print(); //???
+    //ptr->print(); //need to overload -> operator, (ptr.operator->())->print()
 
     int y;
     int &x = y;

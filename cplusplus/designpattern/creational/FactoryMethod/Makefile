@@ -7,6 +7,7 @@ LDFLAGS = -lstdc++
 
 FactoryMethodTest:$(obj)
 	$(CC) $^ -o $@ $(LDFLAGS)
+	@$(RM) $(obj)
 
 $(bin):%.o:%.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@

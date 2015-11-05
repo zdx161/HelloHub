@@ -1,82 +1,36 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
-#include "common.h"
 
-#define PI 3.14159267
-#define DIM 256//512//256//8
+#include "fourier.h"
 
-typedef double (*THRDIM)[DIM][2];
+Bool Fourierphase(Matrix * fourier, Matrix * phase)
+{
+    amplitude = sqrt(pow(((*ptr)[i][0]), 2) + pow(((*ptr)[i][1]), 2));
+}
 
 //DFT: e^(-j*2*pi*n*k/N)
-void createcoeff(double (*p)[DIM][2], int size)
+Bool fouriercoeff(Matrix * coeff)
 {
-    int k, n;
+    int k, m, row, col;
+    complex * ele;
     double w;
 
-    for (k = 0; k < size; k++) {
-        for (n = 0; n < size; n++) {
-            w = (double)(2 * PI * n * k) / ((double) size);
-            (*p)[n][0] = cos(w);
-            (*p)[n][1] = sin(w);
-        }
-        p++;
-    }
-}
-
-THRDIM opendft(double (*p)[DIM][2], double *data, int size)
-{
-    int k, n;
-    THRDIM fdata = NULL;
-
-    fdata = (THRDIM)calloc(1, DIM * 2 * sizeof(double));
-    if (!fdata) {
-        printf("error: allocate memory failed.\n");
-        return NULL;
+    if ((coeff == NULL) || (coeff->element == NULL)) {
+        printf("error: there is not memory in Matrix.\n");
+        return False;
     }
 
-    for (k = 0; k < size; k++) {
-        for (n = 0; n < size; n++) {
-            (*fdata)[k][0] += data[n] * p[k][n][0];
-            (*fdata)[k][1] += data[n] * p[k][n][1];
+    row = coeff->row;
+    col = coeff->col;
+    ele = coeff->element;
+
+    for (k = 0; k < row; k++) {
+        for (m = 0; m < col; m++, ele++) {
+            w = (double)(2 * PI * m * k) / ((double) row);
+            ele->real =  cos(w);
+            ele->imag =  sin(w);
         }
     }
 
-    return fdata;
-}
-
-void closedft(THRDIM td)
-{
-    if (td)
-        free(td);
-}
-
-int main()
-{
-    double coeff[DIM][DIM][2] = {0};
-    double data[DIM] = {0.0};
-    THRDIM ptr;
-
-    createcoeff(coeff, DIM);
-    resample(DIM, data);
-    ptr = dft(coeff, data, DIM);
-
-    int i, j, line;
-
-    printf("=======================fourier coeff===============================\n");
-    printarray((double*) coeff, 'i', 3, DIM, DIM, 2);
-
-    printf("=============================DFT==================================\n");
-    printarray((double*) ptr, 'i', 2, DIM, 2);
-
-    if (ptr)
-        free(ptr);
-
-    return 0;
-}
-
-void phase()
-{
-    double amplitude = sqrt(pow(((*ptr)[i][0]), 2) + pow(((*ptr)[i][1]), 2));
-    printf("%lf\t", i == 0 ? amplitude / DIM : amplitude * 2 / DIM);
+    return True;
 }

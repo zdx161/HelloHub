@@ -3,10 +3,10 @@ all: test
 
 CPPFLAGS =
 CFLAGS = -g
-LDFLAGS =
+LDFLAGS = -lm
 
 test:main.o utils.o
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@

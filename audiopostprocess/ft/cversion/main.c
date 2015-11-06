@@ -1,10 +1,5 @@
-#include "common.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-#include <math.h>
-
+#include "complex.h"
 
 
 
@@ -18,10 +13,16 @@
 
 int main()
 {
-    /*
+    complex c1, c2, c3;
+    c1.real = 1.0;
+    c1.imag = 2.0;
+    c2.real = 3.0;
+    c2.imag = 4.0;
+    c3 = addition_complex(c1, c2);
+    printf("(%lf, %lf)\n", c3.real, c3.imag);
+/*
     double data[8][2] = {0};
     printarray((double *)data, 2, 8, 2);
-    */
 
     int row, col;
     Matrix * coeff = NULL;
@@ -32,10 +33,11 @@ int main()
     coeffmatrix(coeff);
     printmatrix(coeff);
     freematrix(coeff);
-
+*/
     return 0;
 }
 
+/*
 int main()
 {
     double coeff[DIM][DIM][2] = {0};
@@ -59,3 +61,4 @@ int main()
 
     return 0;
 }
+*/

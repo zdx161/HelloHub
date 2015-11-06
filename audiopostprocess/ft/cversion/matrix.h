@@ -1,16 +1,13 @@
 #ifndef MATRIX_FUNCTION_H
 #define MATRIX_FUNCTION_H
 
+#include "complex.h"
+
 //Region of macro
 #define PI (3.14159267)
 
 
 //Region of redefine type of data
-typedef struct {
-    double real;
-    double imag;
-} complex;
-
 typedef struct {
     int row;
     int col;
@@ -30,7 +27,7 @@ void free_matrix(Matrix * m);
 
 //show operations
 void print_matrix(Matrix * m);
-Bool log_matrix(Matrix * m);
+Bool log_matrix(Matrix * m, Bool imag);
 
 //calculator operations
 Bool addition_matrix(Matrix * lm, Matrix * rm, Matrix * sum);

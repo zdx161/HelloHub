@@ -1,29 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
-#define PI 3.14159267
+#include "sampling.h"
 
-void resample(int Herz)
+
+
+//2 + 3 * cos((double)2*PI*50*t-(double)PI*30/((double)180))  + 1.5*cos((double)2*PI*75*t+(double)PI*90/((double) 180));
+double signalfunc(double t)
 {
-    double t;
-    int i;
-    double period = 1 / ((double)Herz);
-
-    for (i = 0, t = 0.0; t < 1.0; t += period, i++) {
-        printf("%lf\t", 2 + 3 * cos((double)2*PI*50*t-(double)PI*30/((double)180)) \
-                    + 1.5*cos((double)2*PI*75*t+(double)PI*90/((double) 180)));
-        if (i > 0 && (i+1) % 8 == 0)
-            printf("\n");
-    }
-}
-
-
-#ifdef TEST
-int main()
-{
-    resample(256);
-
+    double value;
+    value = DC(2) + COSINE(3, 50, t, -30) + COSINE(1.5, 75, t, 90);
     return 0;
 }
-#endif
+
+Bbool sampling(SigFun sf, int f, Matrix * sample)
+{
+    double t;
+    complex * sele;
+    double period = 1 / ((double)f);
+
+    sele = sample->element;
+    for (t = 0.0; t < 1.0; t += period) {
+        sele->real = sf(t);
+    }
+}

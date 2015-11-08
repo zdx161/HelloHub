@@ -5,7 +5,10 @@
 
 //Region of macro
 #define PI (3.14159267)
-
+#define OMEGA(frequency) (2 * PI * frequency)
+#define INITPHA(angle) (angle * PI / 180)
+#define PHASE(f, t, a) (OMEGA(f) * t + INITPHA(a))
+#define DC(x) (x)
 
 //Region of redefine type of data
 typedef struct {
@@ -36,5 +39,6 @@ Bool subtract_matrix(Matrix * lm, Matrix * rm, Matrix * sub);
 Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul);
 Bool num_mul_matrix(int num, Matrix * rm);
 
+Bool swap_matrix(Matrix * inter);
 
 #endif

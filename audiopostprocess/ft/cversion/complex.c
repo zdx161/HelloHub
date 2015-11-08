@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include "complex.h"
 
+void swap_complex(complex *c1, complex *c2)
+{
+    c1->real = c1->real ^ c2->real;
+    c1->imag = c1->imag ^ c2->imag;
+
+    c2->real = c1->real ^ c2->real;
+    c2->imag = c1->imag ^ c2->imag;
+
+    c1->real = c1->real ^ c2->real;
+    c1->imag = c1->imag ^ c2->imag;
+}
+
 complex addition_complex(complex c1, complex c2)
 {
     complex local;

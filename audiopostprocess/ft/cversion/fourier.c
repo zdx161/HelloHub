@@ -3,9 +3,46 @@
 
 #include "fourier.h"
 
-Bool Fourierphase(Matrix * fourier, Matrix * phase)
+Bool fourieramplitude(Matrix * fourier, Matrix * amplitude)
 {
-    amplitude = sqrt(pow(((*ptr)[i][0]), 2) + pow(((*ptr)[i][1]), 2));
+    int r, c, row, col;
+    complex *fele, *pele;
+
+    if (fourier == NULL ||  phase == NULL) {
+        printf("error: Matrix can not be NULL.\n");
+        return False;
+    }
+
+    if (fourier->element == NULL || phase->element == NULL) {
+        printf("error: there is not memory in element of Matrix\n");
+        return False;
+    }
+
+    if (!((fourier->row == phase->row) && (fourier->col == phase->col))) {
+        printf("error: the attribute of Matrix can not be match\n");
+        return False;
+    }
+
+    row = fourier->row;
+    col = fourier->col;
+    fele = fourier->element;
+    pele = fourier->element;
+
+    for (r = 0; r < row; r++) {
+        for (c = 0; c < col; c++, fele++, pele++) {
+            pele->real = sqrt(POWER(fele->real) + POWER(fele->imag));
+            pele->imag = 0;
+        }
+    }
+
+    return True;
+}
+
+Bool signalamplitude(Matrix * fam, Matrix * sam)
+{
+
+
+    return True;
 }
 
 //DFT: e^(-j*2*pi*n*k/N)

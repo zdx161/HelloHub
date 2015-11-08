@@ -7,7 +7,13 @@ typedef struct {
     double imag;
 } complex;
 
-//complex operation
+//complex operation for marco replace
+//inline for C++, but marco for c
+
+
+//complex operation for calling function
+void swap_complex(complex *c1, complex *c2);
+
 complex addition_complex(complex c1, complex c2);
 complex subtract_complex(complex c1, complex c2);
 complex multiply_complex(complex c1, complex c2);

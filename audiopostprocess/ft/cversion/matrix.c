@@ -283,3 +283,24 @@ Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
 
     return True;
 }
+
+Bool swap_matrix(Matrix * inter)
+{
+    int r, row;
+    complex * ele;
+
+    if (inter == NULL || inter->row == 0 || inter->element == NULL) {
+        printf("error: there are some errors in Matrix.\n");
+        return False;
+    }
+
+    row = inter->row;
+    ele = inter->element;
+
+    for (r = 0; r < row / 2; r++) {
+        swap_complex();
+    }
+
+
+    return True;
+}

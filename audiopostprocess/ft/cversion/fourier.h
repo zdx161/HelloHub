@@ -4,6 +4,7 @@
 #include "matrix.h"
 
 //Macro
+#define POWER(x) (x * x)
 
 
 //Redefine
@@ -11,15 +12,15 @@
 
 
 //Fourier coeff
+Bool fourieramplitude(Matrix * Fourier, Matrix * amplitude);
+Bool signalamplitude(Matrix * fam, Matrix * sam)
 Bool fouriercoeff(Matrix * coeff);
-
-
 
 //Discrete-Fourier-Transform
 
 
 //Fast Discrete-Fourier-Transform(Cooley-Tukey's butterfly algorithm)
-
+Bool fft(Matrix * sig);
 
 
 

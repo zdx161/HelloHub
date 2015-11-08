@@ -1,6 +1,14 @@
-#include "common.h"
 #include <stdio.h>
 #include <stdarg.h>
+
+#include "utils.h"
+
+void swap(double * a, double * b)
+{
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+}
 
 void printarray(double *array, char c, int dim, ...)
 {

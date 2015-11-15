@@ -6,19 +6,19 @@
 Bool fourieramplitude(Matrix * fourier, Matrix * amplitude)
 {
     int r, c, row, col;
-    complex *fele, *pele;
+    complex *fele, *aele;
 
-    if (fourier == NULL ||  phase == NULL) {
+    if (fourier == NULL ||  amplitude == NULL) {
         printf("error: Matrix can not be NULL.\n");
         return False;
     }
 
-    if (fourier->element == NULL || phase->element == NULL) {
+    if (fourier->element == NULL || amplitude->element == NULL) {
         printf("error: there is not memory in element of Matrix\n");
         return False;
     }
 
-    if (!((fourier->row == phase->row) && (fourier->col == phase->col))) {
+    if (!((fourier->row == amplitude->row) && (fourier->col == amplitude->col))) {
         printf("error: the attribute of Matrix can not be match\n");
         return False;
     }
@@ -26,12 +26,12 @@ Bool fourieramplitude(Matrix * fourier, Matrix * amplitude)
     row = fourier->row;
     col = fourier->col;
     fele = fourier->element;
-    pele = fourier->element;
+    aele = amplitude->element;
 
     for (r = 0; r < row; r++) {
-        for (c = 0; c < col; c++, fele++, pele++) {
-            pele->real = sqrt(POWER(fele->real) + POWER(fele->imag));
-            pele->imag = 0;
+        for (c = 0; c < col; c++, fele++, aele++) {
+            aele->real = sqrt(POWER(fele->real) + POWER(fele->imag));
+            aele->imag = 0;
         }
     }
 
@@ -40,7 +40,36 @@ Bool fourieramplitude(Matrix * fourier, Matrix * amplitude)
 
 Bool signalamplitude(Matrix * fam, Matrix * sam)
 {
+    int r, c, row, col;
+    complex *fele, *sele;
 
+    if (fam == NULL ||  sam == NULL) {
+        printf("error: Matrix can not be NULL.\n");
+        return False;
+    }
+
+    if (fam->element == NULL || sam->element == NULL) {
+        printf("error: there is not memory in element of Matrix\n");
+        return False;
+    }
+
+    if (!((fam->row == sam->row) && (fam->col == sam->col))) {
+        printf("error: the attribute of Matrix can not be match\n");
+        return False;
+    }
+
+    row = fam->row;
+    col = fam->col;
+    fele = fam->element;
+    sele = sam->element;
+
+    for (r = 0; r < row; r++) {
+        for (c = 0; c < col; c++, fele++, sele++) {
+            sele->real = fele->real / row * 2;
+        }
+    }
+
+    sam->element->real /= 2;
 
     return True;
 }
@@ -63,7 +92,7 @@ Bool fouriercoeff(Matrix * coeff)
 
     for (k = 0; k < row; k++) {
         for (m = 0; m < col; m++, ele++) {
-            w = (double)(2 * PI * m * k) / ((double) row);
+            w = (double)(2. * PI * m * k) / ((double) col);
             ele->real =  cos(w);
             ele->imag =  sin(w);
         }

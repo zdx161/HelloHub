@@ -8,7 +8,7 @@
 #define OMEGA(frequency) (2 * PI * frequency)
 #define INITPHA(angle) (angle * PI / 180)
 #define PHASE(f, t, a) (OMEGA(f) * t + INITPHA(a))
-#define DC(x) (x)
+#define DC(x) ((double)x)
 
 //Region of redefine type of data
 typedef struct {
@@ -26,6 +26,7 @@ typedef enum {
 //Region of functions
 //memory operations
 Matrix * allocate_matrix(int row, int col);
+Matrix * ones_matrix(int row, int col);
 void free_matrix(Matrix * m);
 
 //show operations

@@ -12,7 +12,8 @@
 
 typedef double (*SigFun)(double);
 
-
-Bool sampling(SigFun sf, int hz, Matrix * sample);
+double signalfunc(double t);
+Bool signalsampling(SigFun sf, int hz, Matrix * sample);
+Bool pcmsampling(char * path, Matrix * sample);
 
 #endif

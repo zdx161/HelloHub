@@ -37,6 +37,26 @@ Matrix * allocate_matrix(int row, int col)
     return m;
 }
 
+Matrix * ones_matrix(int row, int col)
+{
+    int r, c, rc;
+    complex * ele;
+    Matrix * ones = NULL;
+    complex com = {1, 0};
+
+    ones = allocate_matrix(row, col);
+    ele = ones->element;
+
+    for (r = 0; r < row; r++) {
+        rc = r * col;
+        for (c = 0; c < col; c++, ele++) {
+            *ele = com;
+        }
+    }
+
+    return ones;
+}
+
 void free_matrix(Matrix * m)
 {
     if (m != NULL) {
@@ -63,13 +83,13 @@ void print_matrix(Matrix * m)
             ele = m->element;
 
             for (r = 0; r < row; r++) {
-                printf("row: %d\n", r);
+                //printf("row: %d\n", r);
 
                 for (c = 0; c < col; c++, ele++) {
                     if (ele->imag >= 0.0)
-                        printf("%lf+%lf\t", ele->real, ele->imag);
+                        printf("%lf+%lfi\t", ele->real, ele->imag);
                     else
-                        printf("%lf%lf\t", ele->real, ele->imag);
+                        printf("%lf%lfi\t", ele->real, ele->imag);
 
                     if ((r * col + c + 1) % 8 == 0)
                         printf("\n");
@@ -117,11 +137,12 @@ Bool log_matrix(Matrix * m, Bool imag)
             if (imag == False) {
                 for (r = 0; r < row; r++) {
                     for (c = 0; c < col; c++, ele++) {
-                        fwrite(&ele->real, sizeof(double), 1, fp);
+                        //fwrite(&ele->real, sizeof(double), 1, fp);
+                        fprintf(fp, "%lf", ele->real);
                         if ((r * col + c + 1) % 16 == 0)
-                            fputc(0x0a, fp);
+                            fprintf(fp, "\n");//fputc(0x0a, fp);
                         else
-                            fputc(0x20, fp);
+                            fprintf(fp, " ");//fputc(0x20, fp);
                     }
                 }
             } else {
@@ -275,7 +296,8 @@ Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
             for (lc = 0; lc < lcol; lc++) {
                 c1 = *(lele + mr * lcol + lc);
                 c2 = *(rele + lc * rcol + mc);
-                m = multiply_complex(c1, c2);
+                //m = multiply_complex(c1, c2);
+                m = num_mul_complex(c1, c2.real);
                 *mele = addition_complex(*mele, m);
             }
         }
@@ -296,11 +318,6 @@ Bool swap_matrix(Matrix * inter)
 
     row = inter->row;
     ele = inter->element;
-
-    for (r = 0; r < row / 2; r++) {
-        swap_complex();
-    }
-
 
     return True;
 }

@@ -3,14 +3,10 @@
 
 void swap_complex(complex *c1, complex *c2)
 {
-    c1->real = c1->real ^ c2->real;
-    c1->imag = c1->imag ^ c2->imag;
-
-    c2->real = c1->real ^ c2->real;
-    c2->imag = c1->imag ^ c2->imag;
-
-    c1->real = c1->real ^ c2->real;
-    c1->imag = c1->imag ^ c2->imag;
+    complex temp;
+    temp = *c1;
+    *c1 = *c2;
+    *c2 = temp;
 }
 
 complex addition_complex(complex c1, complex c2)
@@ -22,7 +18,6 @@ complex addition_complex(complex c1, complex c2)
 
     return local;
 }
-
 
 complex subtract_complex(complex c1, complex c2)
 {
@@ -44,6 +39,12 @@ complex multiply_complex(complex c1, complex c2)
     return local;
 }
 
+complex num_mul_complex(complex c1, double i2)
+{
+    c1.real *= i2;
+    c1.imag *= i2;
+    return c1;
+}
 
 complex division_complex(complex c1, complex c2)
 {

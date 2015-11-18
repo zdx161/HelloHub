@@ -140,9 +140,9 @@ Bool log_matrix(Matrix * m, Bool imag)
                         //fwrite(&ele->real, sizeof(double), 1, fp);
                         fprintf(fp, "%lf", ele->real);
                         if ((r * col + c + 1) % 16 == 0)
-                            fprintf(fp, "\n");//fputc(0x0a, fp);
+                            ;//fprintf(fp, "\n");//fputc(0x0a, fp);
                         else
-                            fprintf(fp, " ");//fputc(0x20, fp);
+                            fprintf(fp, ",");//fputc(0x20, fp);
                     }
                 }
             } else {

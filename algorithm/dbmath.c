@@ -26,7 +26,7 @@ int main()
     for (db = 0; db < 16*6; db++) {
         double val = pow((double)10, -((double)db)/((double)20));
         printf("s/n of %2ddb is %8.6lf, maxval1: %12.6lf : %5d  maxval2: %5d\n", db, val,
-                val * maxvald, (int)(val * maxvald + 0.5f) ,(int)(maxvali * val)); //+0.5f: do round
+                val * maxvald, (int)(val * maxvald + 0.5f), (int)(maxvali * val)); //+0.5f: do round
     }
 
 
@@ -38,5 +38,4 @@ int main()
 
 
     return 0;
-
 }

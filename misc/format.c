@@ -10,6 +10,7 @@ int main(int argc, char * argv[])
     DIR * dp;
     struct dirent * dirp;
     char name[256] = {0};
+    char temp[256] = {0};
     char *line = NULL;
     FILE * from = NULL;
     FILE * to = NULL;
@@ -30,12 +31,12 @@ int main(int argc, char * argv[])
 
     while ((dirp = readdir(dp)) != NULL ) {
         if (dirp->d_type == DT_REG) {
-            snprintf(name, 256, "%s", dirp->d_name);
-            printf("%s\n", name);
+            snprintf(name, 256, "%s/%s", argv[1], dirp->d_name);
+            snprintf(temp, 256, "%s/temp", argv[1], dirp->d_name);
 
             errno = 0;
             from = fopen(name, "r+");
-            to = fopen("temp", "w+");
+            to = fopen(temp, "w+");
             if (from  == NULL || to == NULL) {
                 printf("error: %s\n", strerror(errno));
                 break;
@@ -58,7 +59,7 @@ int main(int argc, char * argv[])
             to = NULL;
 
             remove(name);
-            rename("temp", name);
+            rename(temp, name);
         }
     }
 

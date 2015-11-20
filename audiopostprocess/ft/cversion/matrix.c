@@ -254,7 +254,7 @@ Bool subtract_matrix(Matrix * lm, Matrix * rm, Matrix * sub)
     return addition_matrix(lm, rm, sub);
 }
 
-Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
+Bool multiply_matrix_r(Matrix * lm, Matrix * rm, Matrix * mul)
 {
     int lr, lc, rr, rc, mr, mc, lrow, lcol, rrow, rcol, mrow, mcol;
     complex *lele, *rele, *mele;
@@ -296,10 +296,62 @@ Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
             for (lc = 0; lc < lcol; lc++) {
                 c1 = *(lele + mr * lcol + lc);
                 c2 = *(rele + lc * rcol + mc);
-                //m = multiply_complex(c1, c2);
                 m = num_mul_complex(c1, c2.real);
                 *mele = addition_complex(*mele, m);
             }
+        }
+    }
+
+    return True;
+}
+
+Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
+{
+    int lr, lc, rr, rc, mr, mc, lrow, lcol, rrow, rcol, mrow, mcol;
+    complex *lele, *rele, *mele;
+    complex c1, c2, m, n = {0};
+
+    if (lm == NULL || rm == NULL || mul == NULL) {
+        printf("error: matrix can not be NULL.\n");
+        return False;
+    }
+
+    if (lm->element == NULL || rm->element == NULL || mul->element == NULL) {
+        printf("error: there is no memory in element of matrix.\n");
+        return False;
+    }
+
+    if (!((lm->row > 0 && lm->col > 0) && (rm->row > 0 && rm->col >0) &&
+            (mul->row > 0 && mul->col > 0))) {
+        printf("error: row or col can not be zero.\n");
+        return False;
+    }
+
+    if (!((lm->col == rm->row) && (mul->row == lm->row) && (mul->col == rm->col))) {
+        printf("error: the attribute of matrix can not match\n");
+        return False;
+    }
+
+    lrow = lm->row;
+    lcol = lm->col;
+    rrow = rm->row;
+    rcol = rm->col;
+    mrow = mul->row;
+    mcol = mul->col;
+    lele = lm->element;
+    rele = rm->element;
+    mele = mul->element;
+    n.real = lrow;
+
+    for (mr = 0; mr < mrow; mr++) {
+        for (mc = 0; mc < mcol; mc++, mele++) {
+            for (lc = 0; lc < lcol; lc++) {
+                c1 = *(lele + mr * lcol + lc);
+                c2 = *(rele + lc * rcol + mc);
+                m = multiply_complex(c1, c2);
+                *mele = addition_complex(*mele, m);
+            }
+            *mele = division_complex(*mele, n);
         }
     }
 

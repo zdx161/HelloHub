@@ -7,3 +7,4 @@ mixer
 *.pcm
 *.so
 *.a
+*.files

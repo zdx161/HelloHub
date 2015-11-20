@@ -19,6 +19,7 @@ void dct(float (*data)[4],  int row, int col)
 
 }
 
+#ifdef TEST
 int main()
 {
 
@@ -53,3 +54,4 @@ int main()
 #endif
     return 0;
 }
+#endif

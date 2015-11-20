@@ -3,7 +3,9 @@
 
 #include "utils.h"
 
-void swap(double * a, double * b)
+//note doulbe type can not use bit operator
+//error: invalid operands to binary ^ (have ‘double’ and ‘double’)
+void swap(int * a, int * b)
 {
     *a = *a ^ *b;
     *b = *a ^ *b;

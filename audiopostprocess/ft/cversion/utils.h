@@ -3,6 +3,7 @@
 
 #define LOG_LEVEL 0
 
+void swap(int * a, int * b);
 void printarray(double *array, char c, int dim, ...);
 
 #endif

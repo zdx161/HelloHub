@@ -92,6 +92,32 @@ Bool fouriercoeff(Matrix * coeff)
 
     for (k = 0; k < row; k++) {
         for (m = 0; m < col; m++, ele++) {
+            w = -(double)(2. * PI * m * k) / ((double) col);
+            ele->real =  cos(w);
+            ele->imag =  sin(w);
+        }
+    }
+
+    return True;
+}
+
+Bool fouriercoeff_i(Matrix * coeff)
+{
+    int k, m, row, col;
+    complex * ele;
+    double w;
+
+    if ((coeff == NULL) || (coeff->element == NULL)) {
+        printf("error: there is not memory in Matrix.\n");
+        return False;
+    }
+
+    row = coeff->row;
+    col = coeff->col;
+    ele = coeff->element;
+
+    for (k = 0; k < row; k++) {
+        for (m = 0; m < col; m++, ele++) {
             w = (double)(2. * PI * m * k) / ((double) col);
             ele->real =  cos(w);
             ele->imag =  sin(w);

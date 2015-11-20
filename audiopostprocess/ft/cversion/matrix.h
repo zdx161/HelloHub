@@ -38,6 +38,7 @@ Bool addition_matrix(Matrix * lm, Matrix * rm, Matrix * sum);
 Bool subtract_matrix(Matrix * lm, Matrix * rm, Matrix * sub);
 
 Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul);
+Bool multiply_matrix_r(Matrix * lm, Matrix * rm, Matrix * mul);
 Bool num_mul_matrix(int num, Matrix * rm);
 
 Bool swap_matrix(Matrix * inter);

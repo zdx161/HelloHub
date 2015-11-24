@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <wchar.h>
 
 
 int main()
@@ -21,7 +24,6 @@ int main()
     printf("\n");
     free(ptr);
 
-
     //test stack size
     //ulimit: stack size 8192 kbytes
 
@@ -33,6 +35,23 @@ int main()
 
     //stack_size[0] = 'a';
     //printf("test\n");
+
+    char c[32] = {0};
+    memset(c, 41, 32);
+
+    for (i = 0; i < 32; i++) {
+        printf("%c ", c[i]);
+    }
+    printf("\n");
+
+    int data[32] = {0};
+    wmemset(data, INT_MAX -1, 32);
+    for (i = 0; i < 32; i++) {
+        printf("%d ", data[i]);
+    }
+    printf("\n");
+    printf("%ld\n", sizeof(wchar_t));
+
 
     return 0;
 }

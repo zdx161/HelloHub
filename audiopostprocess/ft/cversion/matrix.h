@@ -41,6 +41,7 @@ Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul);
 Bool multiply_matrix_r(Matrix * lm, Matrix * rm, Matrix * mul);
 Bool num_mul_matrix(int num, Matrix * rm);
 
+Matrix * transpose_matrix(Matrix * m);
 Bool swap_matrix(Matrix * inter);
 
 #endif

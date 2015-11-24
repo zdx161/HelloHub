@@ -358,6 +358,7 @@ Bool multiply_matrix(Matrix * lm, Matrix * rm, Matrix * mul)
     return True;
 }
 
+//need to implement for fft(butterfly algorithm)
 Bool swap_matrix(Matrix * inter)
 {
     int r, row;
@@ -372,4 +373,11 @@ Bool swap_matrix(Matrix * inter)
     ele = inter->element;
 
     return True;
+}
+
+Matrix * transpose_matrix(Matrix * m)
+{
+    Matrix * tm = NULL;
+
+    return tm;
 }

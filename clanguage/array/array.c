@@ -80,24 +80,24 @@ int main()
     printf("\n");
 */
 
-    /*failed
+/*  failed: can not get one-dimension layout
     int **p = NULL;
     p = array;
     *p = &array[0];
-    */
+*/
 
     typedef int (*ARRPOINT)[5]; //OK
     //typedef ((int*)[5]) ARRPOINT; //failed
     //int (*p)[5]; //OK
     ARRPOINT p;
-    p = (ARRPOINT)(&array[0]);//OK
-    //p = ((int *)[5])(&array[0]);//failed
-    //p = ARRPOINT(&array[0]);//failed
+    p = (ARRPOINT)(array);//OK
+    //p = ((int *)[5])(&array[0]);//error: expected expression before ‘[’ token]
+    //p = ARRPOINT(&array[0]);//error: expected expression before ‘ARRPOINT’
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 5; j++) {
             //printf("%d ", twoarray[i][j]); //OK
-            printf("%d ", p[i][j]); //Segmentation fault (core dumped)
+            printf("%d ", p[i][j]); //OK. Segmentation fault (core dumped) for **p
         }
         printf("\n");
     }

@@ -54,6 +54,32 @@ void twodimension(int p[][5], int row, int col)
 }
 #endif
 
+
+void arrayaccess()
+{
+    int r, c, n = 10;
+    int * oned = NULL;
+
+    oned = (int *)calloc(1, n * (n - 1) * sizeof(int));
+
+    if (!oned) {
+        printf("error: calloc failed.\n");
+        return;
+    }
+
+    for (r = 0; r < n; r++) {
+        for (c = 0; c < n - 1; c++) {
+            oned[r * (n - 1) + c] = r * (n - 1) + c;
+            //index of oned[r, c] is r * 0 + c
+            printf("%d-%d ", oned[r, c], oned[r * (n - 1) + c]);
+        }
+    }
+
+    printf("\n");
+
+    free(oned);
+}
+
 int main()
 {
     int array[10] = {0};
@@ -135,6 +161,10 @@ int main()
 
     if (arr)
         free(arr);
+
+    ////////////////////////////////////////////////////////////////////
+    arrayaccess();
+
 
     return 0;
 }
